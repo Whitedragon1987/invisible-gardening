@@ -2,6 +2,7 @@ package com.invisiblegardening.config;
 
 import com.invisiblegardening.filter.JwtRequestFilter;
 import com.invisiblegardening.services.CustomUserDetailsService;
+import org.apache.catalina.filters.CorsFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +15,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -51,6 +58,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
+//                        authorize ->
+//                        authorize.anyRequest().permitAll())
+                .antMatchers(HttpMethod.OPTIONS, "/users").permitAll()
                 .antMatchers(HttpMethod.POST,"/users").permitAll()
                 .antMatchers("/customers/**").hasRole("USER")
                 .antMatchers("/admin/**").hasRole("ADMIN")
