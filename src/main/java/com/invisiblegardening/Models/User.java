@@ -1,5 +1,7 @@
 package com.invisiblegardening.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -31,6 +33,10 @@ public class User {
             orphanRemoval = true,
             fetch = FetchType.EAGER)
     private Set<com.invisiblegardening.Models.Authority> authorities = new HashSet<>();
+
+    @OneToOne
+    @JsonBackReference("userDataUser")
+    UserData userData;
 
     public String getUsername() { return username; }
     public void setUsername(String username) {
