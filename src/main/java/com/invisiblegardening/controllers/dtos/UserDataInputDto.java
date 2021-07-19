@@ -14,13 +14,23 @@ public class UserDataInputDto {
 
     public UserData toUserData() {
         var userData = new UserData();
+
         userData.setId(id);
+
         userData.setUserFirstname(userFirstname);
+
         userData.setUserLastname(userLastname);
+
         userData.setUserAddress(userAddress);
+
         userData.setUserZipcode(userZipcode);
+
         userData.setUserCity(userCity);
+
         userData.setUserPhoneNumber(userPhoneNumber);
+
         return userData;
+
     }
+
 }

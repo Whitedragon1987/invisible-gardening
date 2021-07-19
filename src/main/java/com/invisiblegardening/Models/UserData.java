@@ -1,7 +1,5 @@
 package com.invisiblegardening.Models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import javax.persistence.*;
 
 @Entity
@@ -17,6 +15,9 @@ public class UserData {
     String userZipcode;
     String userCity;
     String userPhoneNumber;
+
+    @OneToOne(mappedBy = "userData")
+    User user;
 
     public Long getId() {
         return id;
@@ -46,6 +47,10 @@ public class UserData {
         return userPhoneNumber;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -73,4 +78,9 @@ public class UserData {
     public void setUserPhoneNumber(String userPhoneNumber) {
         this.userPhoneNumber = userPhoneNumber;
     }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 }

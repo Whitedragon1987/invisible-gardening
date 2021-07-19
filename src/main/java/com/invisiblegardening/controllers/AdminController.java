@@ -12,7 +12,9 @@ public class AdminController {
 
     @RequestMapping(value = "/admin")
     public ResponseEntity<Object> getMessage() {
+
         return new ResponseEntity<>("SECURED REST endpoint: /admin", HttpStatus.OK);
+
     }
 
 }

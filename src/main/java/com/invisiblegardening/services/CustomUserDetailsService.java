@@ -3,6 +3,7 @@ package com.invisiblegardening.services;
 import com.invisiblegardening.Exceptions.UsernameNotFoundException;
 import com.invisiblegardening.Models.Authority;
 import com.invisiblegardening.Models.User;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,20 +24,29 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
+
         Optional<User> user = userService.getUser(username);
+
         if (user == null) {
+
             throw new UsernameNotFoundException(username);
+
         }
 
         String password = user.get().getPassword();
 
         Set<Authority> authorities = user.get().getAuthorities();
+
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+
         for (Authority authority: authorities) {
+
             grantedAuthorities.add(new SimpleGrantedAuthority(authority.getAuthority()));
+
         }
 
         return new org.springframework.security.core.userdetails.User(username, password, grantedAuthorities);
+
     }
 
 }

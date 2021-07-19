@@ -3,6 +3,8 @@ package com.invisiblegardening.services;
 import com.invisiblegardening.Exceptions.RecordNotFoundException;
 import com.invisiblegardening.Models.UserData;
 import com.invisiblegardening.repositories.UserDataRepository;
+import com.invisiblegardening.repositories.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +14,16 @@ import java.util.Optional;
 @Service
 public class UserDataServiceImpl implements UserDataService {
     private UserDataRepository userDataRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    public UserDataServiceImpl(UserDataRepository userDataRepository) {
+    public UserDataServiceImpl(UserDataRepository userDataRepository,
+                               UserRepository userRepository) {
+
         this.userDataRepository = userDataRepository;
+
+        this.userRepository = userRepository;
+
     }
 
     @Override
@@ -42,6 +50,7 @@ public class UserDataServiceImpl implements UserDataService {
 
     @Override
     public List<UserData> findUserDataListByUserLastname(String userLastname) {
+
         var optionalUserDataList = userDataRepository.findByUserLastnameContainingIgnoreCase(userLastname);
 
         if(optionalUserDataList.isEmpty()) {
@@ -73,7 +82,9 @@ public class UserDataServiceImpl implements UserDataService {
 
     @Override
     public UserData saveUserData(UserData userData) {
+
         return userDataRepository.save(userData);
+
     }
 
     @Override
