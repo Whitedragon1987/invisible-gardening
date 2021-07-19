@@ -34,9 +34,6 @@ public class User {
             fetch = FetchType.EAGER)
     private Set<com.invisiblegardening.Models.Authority> authorities = new HashSet<>();
 
-    @OneToOne
-    @JsonBackReference("userDataUser")
-    UserData userData;
 
     public String getUsername() { return username; }
     public void setUsername(String username) {

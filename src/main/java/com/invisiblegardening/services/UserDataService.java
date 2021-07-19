@@ -8,11 +8,11 @@ public interface UserDataService {
 
     List<UserData> getUserDataList();
     List<UserData> findUserDataListByUserFirstname(String userFirstname);
-    List<UserData> findUserDataListByUsersLastname(String userLastname);
+    List<UserData> findUserDataListByUserLastname(String userLastname);
 
     UserData getUserData(Long id);
     UserData saveUserData(UserData userData);
 
-    void updateUserData(Long id, UserData userData);
+    void updateUserData(Long id, UserData userdata);
     void deleteUserData(Long id);
 }
