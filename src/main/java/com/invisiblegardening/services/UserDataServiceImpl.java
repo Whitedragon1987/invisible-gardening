@@ -2,6 +2,7 @@ package com.invisiblegardening.services;
 
 import com.invisiblegardening.Exceptions.RecordNotFoundException;
 import com.invisiblegardening.Models.UserData;
+import com.invisiblegardening.repositories.CompanyRepository;
 import com.invisiblegardening.repositories.UserDataRepository;
 import com.invisiblegardening.repositories.UserRepository;
 
@@ -14,15 +15,15 @@ import java.util.Optional;
 @Service
 public class UserDataServiceImpl implements UserDataService {
     private UserDataRepository userDataRepository;
-    private UserRepository userRepository;
+    private CompanyRepository companyRepository;
 
     @Autowired
     public UserDataServiceImpl(UserDataRepository userDataRepository,
-                               UserRepository userRepository) {
+                               CompanyRepository companyRepository) {
 
         this.userDataRepository = userDataRepository;
 
-        this.userRepository = userRepository;
+        this.companyRepository = companyRepository;
 
     }
 
@@ -108,6 +109,27 @@ public class UserDataServiceImpl implements UserDataService {
     public void deleteUserData(Long id) {
 
         userDataRepository.deleteById(id);
+
+    }
+
+    @Override
+    public void assignCompanyToUserData(Long companyId, Long id) {
+
+        var optionalCompany = companyRepository.findById(companyId);
+
+        var optionalUserData = userDataRepository.findById(id);
+
+
+        if (optionalCompany.isPresent() && optionalUserData.isPresent()) {
+
+            var company = optionalCompany.get();
+
+            var userData = optionalUserData.get();
+
+            userData.setCompany(company);
+
+            userDataRepository.save(userData);
+        }
 
     }
 

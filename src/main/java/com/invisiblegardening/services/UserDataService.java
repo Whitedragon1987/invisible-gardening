@@ -13,6 +13,7 @@ public interface UserDataService {
     UserData getUserData(Long id);
     UserData saveUserData(UserData userData);
 
-    void updateUserData(Long id, UserData userdata);
+    void updateUserData(Long id, UserData userData);
     void deleteUserData(Long id);
+    void assignCompanyToUserData(Long companyId, Long id);
 }
