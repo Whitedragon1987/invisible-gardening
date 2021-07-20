@@ -33,7 +33,7 @@ public class User {
             cascade = CascadeType.ALL,
             orphanRemoval = true,
             fetch = FetchType.EAGER)
-    private Set<com.invisiblegardening.Models.Authority> authorities = new HashSet<>();
+    private Set<Authority> authorities = new HashSet<>();
 
 
     public String getUsername() { return username; }

@@ -1,9 +1,8 @@
 package com.invisiblegardening.Models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Machine {
@@ -18,6 +17,9 @@ public class Machine {
     String machineMeasurements;
     Date machineLastService;
     Date machinePlannedService;
+
+    @OneToMany(mappedBy = "machine")
+    List<Request> requestList;
 
     public Long getId() {
 
