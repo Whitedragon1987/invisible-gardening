@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping("customer-requests")
+@RequestMapping("requests")
 public class RequestController {
     private final RequestService requestService;
 
@@ -26,7 +26,7 @@ public class RequestController {
     }
 
     @GetMapping
-    public List<RequestDto> getBookings(@RequestParam(value = "machineId", required = false) Long machineId,
+    public List<RequestDto> getRequests(@RequestParam(value = "machineId", required = false) Long machineId,
                                         @RequestParam(value = "jobId", required = false) Long jobId,
                                         @RequestParam(value = "customerDataId", required = false) Long userDataId,
                                         @RequestParam(value = "quoteId", required = false) Long quoteId,
@@ -53,7 +53,8 @@ public class RequestController {
 
             requests = requestService.getRequestsForUserData(userDataId);
 
-        } else if (userDataId == null && jobId == null && machineId == null && quoteId != null && start == null && end == null) {
+        }
+        else if (userDataId == null && jobId == null && machineId == null && quoteId != null && start == null && end == null) {
 
             requests = requestService.getRequestsForQuote(quoteId);
 
@@ -82,9 +83,9 @@ public class RequestController {
     }
 
     @PostMapping
-    public void saveBooking(@RequestBody RequestInputDto dto) {
+    public void saveRequest(@RequestBody RequestInputDto dto) {
 
-        requestService.planRequest(dto.machineId, dto.jobId, dto.quoteId, dto.userDataId, dto.startTime, dto.endTime);
+        requestService.planRequest(dto.machineId, dto.jobId, dto.userDataId, dto.quoteId, dto.startTime, dto.endTime);
 
     }
 

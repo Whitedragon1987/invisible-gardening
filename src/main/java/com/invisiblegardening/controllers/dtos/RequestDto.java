@@ -20,8 +20,8 @@ public class RequestDto {
     @JsonSerialize
     JobDto job;
 
-    @JsonSerialize
-    QuoteDto quote;
+//    @JsonSerialize
+//    QuoteDto quote;
 
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     LocalDateTime startTime;
@@ -41,7 +41,7 @@ public class RequestDto {
 
         dto.job = JobDto.fromJob(request.getJob());
 
-        dto.quote = QuoteDto.fromQuote(request.getQuote());
+//        dto.quote = QuoteDto.fromQuote(request.getQuote());
 
         dto.startTime = request.getRequestStartTime();
 

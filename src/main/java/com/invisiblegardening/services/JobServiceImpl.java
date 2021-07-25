@@ -2,6 +2,7 @@ package com.invisiblegardening.services;
 
 import com.invisiblegardening.Exceptions.RecordNotFoundException;
 import com.invisiblegardening.Models.Job;
+import com.invisiblegardening.repositories.EmployeeRepository;
 import com.invisiblegardening.repositories.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,11 +12,15 @@ import java.util.Optional;
 @Service
 public class JobServiceImpl implements JobService{
     private JobRepository jobRepository;
+    private EmployeeRepository employeeRepository;
 
     @Autowired
-    public JobServiceImpl(JobRepository jobRepository) {
+    public JobServiceImpl(JobRepository jobRepository,
+                          EmployeeRepository employeeRepository) {
 
         this.jobRepository = jobRepository;
+
+        this.employeeRepository = employeeRepository;
 
     }
 
@@ -73,6 +78,31 @@ public class JobServiceImpl implements JobService{
     public void deleteJob(Long id) {
 
         jobRepository.deleteById(id);
+
+    }
+
+    @Override
+    public void assignEmployee(Long jobId, Long employeeId) {
+
+        var optionalJob = jobRepository.findById(jobId);
+
+        var optionalEmployee = employeeRepository.findById(employeeId);
+
+        if (optionalJob.isPresent() && optionalEmployee.isPresent()) {
+
+            var job = optionalJob.get();
+
+            var employee = optionalEmployee.get();
+
+            job.setEmployee(employee);
+
+            jobRepository.save(job);
+
+        } else {
+
+            throw new RecordNotFoundException("geen gegevens gevonden om op te slaan");
+
+        }
 
     }
 

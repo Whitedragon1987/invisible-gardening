@@ -17,7 +17,6 @@ public class Job {
     Boolean employeeNeeded;
 
     @ManyToOne
-    @JsonBackReference("jobEmployee")
     Employee employee;
 
     @OneToMany(mappedBy = "job")
@@ -47,6 +46,10 @@ public class Job {
 
     }
 
+    public Employee getEmployee() {
+        return employee;
+    }
+
     public void setId(Long id) {
 
         this.id = id;
@@ -71,4 +74,7 @@ public class Job {
 
     }
 
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
 }

@@ -1,6 +1,7 @@
 package com.invisiblegardening.controllers;
 
 import com.invisiblegardening.Models.Job;
+import com.invisiblegardening.controllers.dtos.IdInputDto;
 import com.invisiblegardening.controllers.dtos.JobDto;
 import com.invisiblegardening.controllers.dtos.JobInputDto;
 import com.invisiblegardening.services.JobService;
@@ -59,6 +60,13 @@ public class JobController {
 
     }
 
+    @PostMapping("/{id}/employee")
+    public void assignEmployeeToJob(@PathVariable("id") Long jobId,
+                                    @RequestBody IdInputDto input) {
+
+        jobService.assignEmployee(jobId, input.id);
+
+    }
 
     @PutMapping("/{id}")
     public JobDto updateJob(@PathVariable Long id, @RequestBody Job job) {

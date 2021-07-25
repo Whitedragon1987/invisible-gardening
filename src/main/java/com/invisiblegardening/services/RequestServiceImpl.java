@@ -2,7 +2,6 @@ package com.invisiblegardening.services;
 
 import com.invisiblegardening.Exceptions.BadRequestException;
 import com.invisiblegardening.Exceptions.RecordNotFoundException;
-import com.invisiblegardening.Models.Job;
 import com.invisiblegardening.Models.Machine;
 import com.invisiblegardening.Models.Request;
 import com.invisiblegardening.Models.RequestStatus;
@@ -51,11 +50,10 @@ public class RequestServiceImpl implements RequestService {
 
     }
 
+
     @Override
     public List<Request> getRequestBetweenDates(LocalDateTime start, LocalDateTime end) {
-
         return requestRepository.findByRequestStartTimeBetween(start, end);
-
     }
 
     @Override
@@ -152,7 +150,7 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public void planRequest(Long machineId, Long jobId, Long quoteId, Long userDataId, LocalDateTime requestStartTime, LocalDateTime requestEndTime) {
+    public void planRequest(Long machineId, Long jobId,  Long userDataId, Long quoteId, LocalDateTime requestStartTime, LocalDateTime requestEndTime) {
 
         var optionalUserData = userDataRepository.findById(userDataId);
 
@@ -163,7 +161,7 @@ public class RequestServiceImpl implements RequestService {
         var optionalQuote = quoteRepository.findById(quoteId);
 
 
-        if (optionalUserData.isEmpty() || (optionalMachine.isEmpty() && optionalJob.isEmpty() && optionalQuote.isEmpty())) {
+        if (optionalUserData.isEmpty() || (optionalMachine.isEmpty() && optionalJob.isEmpty() )) {
 
             throw new BadRequestException("missing information");
 
