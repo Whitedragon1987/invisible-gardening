@@ -8,7 +8,7 @@ import javax.persistence.*;
 public class UserData {
 
     @Id
-    @GeneratedValue
+//    @GeneratedValue
     Long id;
 
     String userFirstname;
@@ -17,12 +17,13 @@ public class UserData {
     String userZipcode;
     String userCity;
     String userPhoneNumber;
+    Boolean hasCompany;
 
     @OneToOne(mappedBy = "userData")
     User user;
 
-    @OneToOne
-    @JsonBackReference("userDataCompany")
+    @OneToOne(mappedBy = "userData")
+    @JsonBackReference("companyUserData")
     Company company;
 
     public Long getId() {
@@ -67,16 +68,8 @@ public class UserData {
 
     }
 
-    public User getUser() {
-
-        return user;
-
-    }
-
-    public Company getCompany() {
-
-        return company;
-
+    public Boolean getHasCompany() {
+        return hasCompany;
     }
 
     public void setId(Long id) {
@@ -121,15 +114,7 @@ public class UserData {
 
     }
 
-    public void setUser(User user) {
-
-        this.user = user;
-
-    }
-
-    public void setCompany(Company company) {
-
-        this.company = company;
-
+    public void setHasCompany(Boolean hasCompany) {
+        this.hasCompany = hasCompany;
     }
 }

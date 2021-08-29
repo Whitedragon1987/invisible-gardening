@@ -84,4 +84,10 @@ public class JobController {
 
     }
 
+    @PutMapping("/job/{id}/picture")
+    public void assignPictureToMachine(@PathVariable("id") Long jobId, @RequestBody IdInputDto input) {
+
+        jobService.assignPicture(jobId, input.id);
+    }
+
 }

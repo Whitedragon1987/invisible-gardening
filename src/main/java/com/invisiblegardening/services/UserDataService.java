@@ -15,5 +15,4 @@ public interface UserDataService {
 
     void updateUserData(Long id, UserData userData);
     void deleteUserData(Long id);
-    void assignCompanyToUserData(Long companyId, Long id);
 }

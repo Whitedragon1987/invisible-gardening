@@ -2,8 +2,10 @@ package com.invisiblegardening.services;
 
 import com.invisiblegardening.Exceptions.RecordNotFoundException;
 import com.invisiblegardening.Models.Job;
+import com.invisiblegardening.Models.Picture;
 import com.invisiblegardening.repositories.EmployeeRepository;
 import com.invisiblegardening.repositories.JobRepository;
+import com.invisiblegardening.repositories.PictureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -13,12 +15,16 @@ import java.util.Optional;
 public class JobServiceImpl implements JobService{
     private JobRepository jobRepository;
     private EmployeeRepository employeeRepository;
+    private PictureRepository pictureRepository;
 
     @Autowired
     public JobServiceImpl(JobRepository jobRepository,
+                          PictureRepository pictureRepository,
                           EmployeeRepository employeeRepository) {
 
         this.jobRepository = jobRepository;
+
+        this.pictureRepository = pictureRepository;
 
         this.employeeRepository = employeeRepository;
 
@@ -78,6 +84,31 @@ public class JobServiceImpl implements JobService{
     public void deleteJob(Long id) {
 
         jobRepository.deleteById(id);
+
+    }
+
+    @Override
+    public void assignPicture(Long id, Long pictureId) {
+
+        var optionalJob = jobRepository.findById(id);
+
+        var optionalPicture = pictureRepository.findById(pictureId);
+
+        if (optionalJob.isPresent() && optionalPicture.isPresent()) {
+
+            var job = optionalJob.get();
+
+            var picture = optionalPicture.get();
+
+            job.setPicture(picture);
+
+            jobRepository.save(job);
+
+        } else {
+
+            throw new RecordNotFoundException();
+
+        }
 
     }
 

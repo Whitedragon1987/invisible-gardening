@@ -11,6 +11,7 @@ public class CompanyDto {
     public String emailaddress;
     public String phoneNumber;
 
+
     public static CompanyDto fromCompany(Company company) {
         var dto = new CompanyDto();
 

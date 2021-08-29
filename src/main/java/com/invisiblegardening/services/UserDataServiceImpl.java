@@ -1,13 +1,14 @@
 package com.invisiblegardening.services;
 
 import com.invisiblegardening.Exceptions.RecordNotFoundException;
+import com.invisiblegardening.Models.User;
 import com.invisiblegardening.Models.UserData;
-import com.invisiblegardening.repositories.CompanyRepository;
 import com.invisiblegardening.repositories.UserDataRepository;
-import com.invisiblegardening.repositories.UserRepository;
 
+import com.invisiblegardening.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,15 +16,14 @@ import java.util.Optional;
 @Service
 public class UserDataServiceImpl implements UserDataService {
     private UserDataRepository userDataRepository;
-    private CompanyRepository companyRepository;
+    private UserRepository userRepository;
 
     @Autowired
     public UserDataServiceImpl(UserDataRepository userDataRepository,
-                               CompanyRepository companyRepository) {
+                               UserRepository userRepository) {
 
         this.userDataRepository = userDataRepository;
-
-        this.companyRepository = companyRepository;
+        this.userRepository = userRepository;
 
     }
 
@@ -109,27 +109,6 @@ public class UserDataServiceImpl implements UserDataService {
     public void deleteUserData(Long id) {
 
         userDataRepository.deleteById(id);
-
-    }
-
-    @Override
-    public void assignCompanyToUserData(Long companyId, Long id) {
-
-        var optionalCompany = companyRepository.findById(companyId);
-
-        var optionalUserData = userDataRepository.findById(id);
-
-
-        if (optionalCompany.isPresent() && optionalUserData.isPresent()) {
-
-            var company = optionalCompany.get();
-
-            var userData = optionalUserData.get();
-
-            userData.setCompany(company);
-
-            userDataRepository.save(userData);
-        }
 
     }
 

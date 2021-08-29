@@ -12,5 +12,7 @@ public interface JobService {
 
     void updateJob(Long id, Job job);
     void deleteJob(Long id);
+
+    void assignPicture(Long id, Long pictureId);
     void assignEmployee(Long jobId, Long employeeId);
 }

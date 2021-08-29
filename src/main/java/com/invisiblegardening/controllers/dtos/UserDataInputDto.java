@@ -3,14 +3,15 @@ package com.invisiblegardening.controllers.dtos;
 import com.invisiblegardening.Models.UserData;
 
 public class UserDataInputDto {
-    Long id;
+    public Long id;
 
-    String userFirstname;
-    String userLastname;
-    String userAddress;
-    String userZipcode;
-    String userCity;
-    String userPhoneNumber;
+    public String userFirstname;
+    public String userLastname;
+    public String userAddress;
+    public String userZipcode;
+    public String userCity;
+    public String userPhoneNumber;
+    public Boolean hasCompany;
 
     public UserData toUserData() {
         var userData = new UserData();
@@ -28,6 +29,8 @@ public class UserDataInputDto {
         userData.setUserCity(userCity);
 
         userData.setUserPhoneNumber(userPhoneNumber);
+
+        userData.setHasCompany(hasCompany);
 
         return userData;
 

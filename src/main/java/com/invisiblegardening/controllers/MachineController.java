@@ -1,13 +1,21 @@
 package com.invisiblegardening.controllers;
 
+import com.invisiblegardening.Exceptions.BadRequestException;
 import com.invisiblegardening.Models.Machine;
+import com.invisiblegardening.ResponseFile.ResponseMessage;
+import com.invisiblegardening.controllers.dtos.IdInputDto;
 import com.invisiblegardening.controllers.dtos.MachineDto;
 import com.invisiblegardening.controllers.dtos.MachineInputDto;
 import com.invisiblegardening.services.MachineService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +55,15 @@ public class MachineController {
 
     }
 
+//    @GetMapping("/machine/{machineName}")
+//    public MachineDto getMachineByMachineName(@PathVariable("machineName") String machineName) {
+//
+//        var machine = machineService.getMachineByMachineName(machineName);
+//
+//        return MachineDto.fromMachine(machine);
+//
+//    }
+
     @PostMapping
     public MachineDto saveMachine(@RequestBody MachineInputDto dto) {
 
@@ -70,6 +87,12 @@ public class MachineController {
 
         machineService.deleteMachine(id);
 
+    }
+
+    @PutMapping("/machine/{id}/picture")
+    public void assignPictureToMachine(@PathVariable("id") Long machineId, @RequestBody IdInputDto input) {
+
+        machineService.assignPicture(machineId, input.id);
     }
 
 }

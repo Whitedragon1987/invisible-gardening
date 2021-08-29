@@ -1,16 +1,22 @@
 package com.invisiblegardening.controllers.dtos;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.invisiblegardening.Models.User;
 import com.invisiblegardening.Models.UserData;
 
 public class UserDataDto {
-    Long id;
+    public Long id;
 
-    String userFirstname;
-    String userLastname;
-    String userAddress;
-    String userZipcode;
-    String userCity;
-    String userPhoneNumber;
+    public String userFirstname;
+    public String userLastname;
+    public String userAddress;
+    public String userZipcode;
+    public String userCity;
+    public String userPhoneNumber;
+    public Boolean hasCompany;
+
+
+
 
     public static UserDataDto fromUserData(UserData userData) {
         var dto = new UserDataDto();
@@ -28,6 +34,8 @@ public class UserDataDto {
         dto.userCity = userData.getUserCity();
 
         dto.userPhoneNumber = userData.getUserPhoneNumber();
+
+        dto.hasCompany = userData.getHasCompany();
 
         return dto;
 

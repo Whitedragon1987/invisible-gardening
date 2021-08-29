@@ -1,6 +1,7 @@
 package com.invisiblegardening.services;
 
 import com.invisiblegardening.Exceptions.RecordNotFoundException;
+import com.invisiblegardening.Exceptions.UsernameAlreadyExistException;
 import com.invisiblegardening.Exceptions.UsernameNotFoundException;
 import com.invisiblegardening.Models.Authority;
 import com.invisiblegardening.Models.User;
@@ -52,7 +53,13 @@ public class UserServiceImpl implements com.invisiblegardening.services.UserServ
     @Override
     public String createUser(User user) {
 
+        if(userExists(user.getUsername())){
+            throw new UsernameAlreadyExistException("Username is al in gebuik");
+        }
+
         String randomString = RandomStringGenerator.generateAlphaNumeric(20);
+
+        user.setEmail(user.getEmail());
 
         user.setApikey(randomString);
 
@@ -61,6 +68,8 @@ public class UserServiceImpl implements com.invisiblegardening.services.UserServ
         user.getAuthorities().clear();
 
         user.addAuthority(new Authority(user.getUsername(),"ROLE_USER"));
+
+        user.setId((getUsers().size())+1);
 
         User newUser = userRepository.save(user);
 

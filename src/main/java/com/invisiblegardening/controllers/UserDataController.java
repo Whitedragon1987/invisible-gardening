@@ -1,7 +1,6 @@
 package com.invisiblegardening.controllers;
 
 import com.invisiblegardening.Models.UserData;
-import com.invisiblegardening.controllers.dtos.IdInputDto;
 import com.invisiblegardening.controllers.dtos.UserDataDto;
 import com.invisiblegardening.controllers.dtos.UserDataInputDto;
 import com.invisiblegardening.services.UserDataService;
@@ -76,20 +75,12 @@ public class UserDataController {
     }
 
     @PutMapping("/{id}")
-    public UserDataDto updatUserData(@PathVariable Long id,
+    public UserDataDto updateUserData(@PathVariable Long id,
                                      @RequestBody UserData userData) {
 
         userDataService.updateUserData(id, userData);
 
         return UserDataDto.fromUserData(userData);
-
-    }
-
-    @PostMapping("/{id}/company")
-    public void assignCompanyToUserData(@PathVariable("id") Long customerDataId,
-                                        @RequestBody IdInputDto input) {
-
-        userDataService.assignCompanyToUserData(customerDataId, input.id);
 
     }
 

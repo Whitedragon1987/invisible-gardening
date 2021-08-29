@@ -16,6 +16,9 @@ public class Job {
     String jobDescription;
     Boolean employeeNeeded;
 
+    @OneToOne
+    Picture picture;
+
     @ManyToOne
     Employee employee;
 
@@ -50,6 +53,10 @@ public class Job {
         return employee;
     }
 
+    public Picture getPicture() {
+        return picture;
+    }
+
     public void setId(Long id) {
 
         this.id = id;
@@ -76,5 +83,9 @@ public class Job {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    public void setPicture(Picture picture) {
+        this.picture = picture;
     }
 }

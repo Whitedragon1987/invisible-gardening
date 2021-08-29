@@ -1,6 +1,8 @@
 package com.invisiblegardening.controllers.dtos;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.invisiblegardening.Models.Job;
+import com.invisiblegardening.Models.Picture;
 
 public class JobDto {
     public Long id;
@@ -9,6 +11,9 @@ public class JobDto {
     public String description;
 
     public Boolean employeeNeeded;
+
+    @JsonSerialize
+    Picture picture;
 
 
     public static JobDto fromJob(Job job) {
@@ -22,6 +27,8 @@ public class JobDto {
         dto.description = job.getJobDescription();
 
         dto.employeeNeeded = job.getEmployeeNeeded();
+
+        dto.picture = job.getPicture();
 
         return dto;
 

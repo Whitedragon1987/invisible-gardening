@@ -18,6 +18,9 @@ public class Machine {
     Date machineLastService;
     Date machinePlannedService;
 
+    @OneToOne
+    Picture picture;
+
     @OneToMany(mappedBy = "machine")
     List<Request> requestList;
 
@@ -63,10 +66,12 @@ public class Machine {
 
     }
 
+    public Picture getPicture() {
+        return picture;
+    }
+
     public void setId(Long id) {
-
         this.id = id;
-
     }
 
     public void setMachineName(String machineName) {
@@ -105,4 +110,7 @@ public class Machine {
 
     }
 
+    public void setPicture(Picture picture) {
+        this.picture = picture;
+    }
 }

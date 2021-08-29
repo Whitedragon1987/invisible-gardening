@@ -3,12 +3,14 @@ package com.invisiblegardening.controllers;
 import com.invisiblegardening.Models.Company;
 import com.invisiblegardening.controllers.dtos.CompanyDto;
 import com.invisiblegardening.controllers.dtos.CompanyInputDto;
+import com.invisiblegardening.controllers.dtos.IdInputDto;
 import com.invisiblegardening.services.CompanyService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 @RequestMapping("company")
 public class CompanyController {
     private final CompanyService companyService;
@@ -28,6 +30,14 @@ public class CompanyController {
 
         return CompanyDto.fromCompany(company);
 
+    }
+
+    @GetMapping("/company/{user-data-id}")
+    public  CompanyDto getCompanyByUserDataId(@PathVariable("user-data-id")Long userDataId) {
+
+        var company = companyService.getCompanyByUserDataId(userDataId);
+
+        return CompanyDto.fromCompany(company);
     }
 
     @PostMapping
@@ -52,6 +62,14 @@ public class CompanyController {
     public void deleteCompany(@PathVariable("id") Long id) {
 
         companyService.deleteCompany(id);
+
+    }
+
+    @PostMapping("/{id}/{userdataId}")
+    public void assignUserDataToCompany(@PathVariable("id") Long id,
+                                        @RequestBody IdInputDto input) {
+
+        companyService.assignUserDataToCompany(id, input.id);
 
     }
 

@@ -2,10 +2,8 @@ package com.invisiblegardening.Models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+
+import javax.persistence.*;
 
 @Entity
 public class Company {
@@ -21,8 +19,8 @@ public class Company {
     String companyEmailaddress;
     String companyPhoneNumber;
 
-    @OneToOne(mappedBy = "company")
-    @JsonBackReference("userDataCompany")
+    @OneToOne
+    @JsonBackReference("companyUserData")
     UserData userData;
 
     public Long getId() {
@@ -120,5 +118,4 @@ public class Company {
         this.userData = userData;
 
     }
-
 }

@@ -12,6 +12,9 @@ public class User {
     @Column(nullable = false, unique = true)
     private String username;
 
+    @Column(nullable = false)
+    private int id;
+
     @Column(nullable = false, length = 255)
     private String password;
 
@@ -21,7 +24,7 @@ public class User {
     @Column
     private String apikey;
 
-    @Column
+    @Column(nullable = false, unique = true)
     private String email;
 
     @OneToOne
@@ -42,6 +45,14 @@ public class User {
 
         this.username = username;
 
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getPassword() {
