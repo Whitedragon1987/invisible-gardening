@@ -1,5 +1,7 @@
 package com.invisiblegardening.controllers.dtos;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.invisiblegardening.Models.Employee;
 import com.invisiblegardening.Models.Job;
 
 public class JobInputDto {
@@ -9,6 +11,9 @@ public class JobInputDto {
     public String description;
 
     public Boolean employeeNeeded;
+
+    @JsonSerialize
+    Employee employee;
 
     public Job toJob() {
         var job = new Job();
@@ -20,6 +25,8 @@ public class JobInputDto {
         job.setJobDescription(description);
 
         job.setEmployeeNeeded(employeeNeeded);
+
+        job.setEmployee(employee);
 
         return job;
     }

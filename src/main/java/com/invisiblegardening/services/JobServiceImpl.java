@@ -68,8 +68,6 @@ public class JobServiceImpl implements JobService{
 
         if (optionalJob.isPresent()) {
 
-            jobRepository.deleteById(id);
-
             jobRepository.save(job);
 
         } else {

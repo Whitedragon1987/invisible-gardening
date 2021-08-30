@@ -1,0 +1,21 @@
+package com.invisiblegardening.controllers;
+
+import com.invisiblegardening.services.ReviewService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@CrossOrigin
+@RequestMapping("reviews")
+public class ReviewController {
+    private final ReviewService reviewService;
+
+    @Autowired
+    public ReviewController(ReviewService reviewService) {
+        this.reviewService = reviewService;
+    }
+
+
+}

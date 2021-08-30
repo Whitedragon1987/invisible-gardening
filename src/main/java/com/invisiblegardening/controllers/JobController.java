@@ -68,7 +68,7 @@ public class JobController {
 
     }
 
-    @PutMapping("/{id}")
+    @PostMapping("/{id}")
     public JobDto updateJob(@PathVariable Long id, @RequestBody Job job) {
 
         jobService.updateJob(id, job);
@@ -84,7 +84,7 @@ public class JobController {
 
     }
 
-    @PutMapping("/job/{id}/picture")
+    @PostMapping("/job/{id}/picture")
     public void assignPictureToMachine(@PathVariable("id") Long jobId, @RequestBody IdInputDto input) {
 
         jobService.assignPicture(jobId, input.id);
