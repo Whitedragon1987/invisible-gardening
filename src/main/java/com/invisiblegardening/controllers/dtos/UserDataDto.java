@@ -19,6 +19,8 @@ public class UserDataDto {
 
 
     public static UserDataDto fromUserData(UserData userData) {
+        if (userData == null ) return null;
+
         var dto = new UserDataDto();
 
         dto.id = userData.getId();

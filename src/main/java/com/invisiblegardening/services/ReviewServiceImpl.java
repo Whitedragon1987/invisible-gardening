@@ -68,6 +68,7 @@ public class ReviewServiceImpl implements ReviewService{
 
     @Override
     public void assignPicture(Long id, Long pictureId) {
+
         var optionalReview = reviewRepository.findById(id);
 
         var optionalPicture = pictureRepository.findById(pictureId);
@@ -87,29 +88,7 @@ public class ReviewServiceImpl implements ReviewService{
             throw new RecordNotFoundException();
 
         }
+
     }
 
-
-    @Override
-    public void assignUserData(Long id, Long userDataId) {
-        var optionalReview = reviewRepository.findById(id);
-
-        var optionalUserData = userDataRepository.findById(userDataId);
-
-        if (optionalReview.isPresent() && optionalUserData.isPresent()) {
-
-            var review = optionalReview.get();
-
-            var userData = optionalUserData.get();
-
-            review.setUserData(userData);
-
-            reviewRepository.save(review);
-
-        } else {
-
-            throw new RecordNotFoundException("geen gegevens gevonden om op te slaan");
-
-        }
-    }
 }

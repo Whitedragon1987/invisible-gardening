@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping("user-data")
+@RequestMapping("userdata")
 public class UserDataController {
     private final UserDataService userDataService;
 

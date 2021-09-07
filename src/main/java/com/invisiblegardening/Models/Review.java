@@ -14,9 +14,7 @@ public class Review {
 
     String value;
     String description;
-
-    @OneToOne
-    UserData userData;
+    String name;
 
     @OneToOne
     Picture picture;
@@ -33,8 +31,8 @@ public class Review {
         return description;
     }
 
-    public UserData getUserData() {
-        return userData;
+    public String getName() {
+        return name;
     }
 
     public Picture getPicture() {
@@ -53,8 +51,8 @@ public class Review {
         this.description = description;
     }
 
-    public void setUserData(UserData userData) {
-        this.userData = userData;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setPicture(Picture picture) {

@@ -106,7 +106,7 @@ public class MachineServiceImpl implements MachineService{
     }
 
     @Override
-    public void assignPicture(Long id, Long pictureId) {
+    public void assignPictureToMachine(Long id, Long pictureId) {
 
         var optionalMachine = machineRepository.findById(id);
 

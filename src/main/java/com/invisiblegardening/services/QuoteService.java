@@ -10,10 +10,10 @@ public interface QuoteService {
     List<Quote> getQuoteList();
 
     Quote getQuote(Long id);
-    Quote saveQuote(Quote quote);
+    Quote saveQuote(Quote quote, Long userDataId);
 
     void deleteQuote(Long id);
-    void uploadSituation(Long id, MultipartFile file) throws IOException;
+    void assignUserDataToQuote(Long id, Long userDataId);
+    void assignPictureToQuote(Long id, Long pictureId);
 
-    byte[] getImage(Long id);
 }

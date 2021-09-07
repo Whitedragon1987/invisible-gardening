@@ -21,6 +21,12 @@ public class Picture {
     @OneToOne(mappedBy = "picture")
     Job job;
 
+    @OneToOne(mappedBy = "picture")
+    Review review;
+
+    @OneToOne(mappedBy = "picture")
+    Quote quote;
+
     public Picture(){
     };
 

@@ -92,7 +92,7 @@ public class MachineController {
     @PutMapping("/machine/{id}/picture")
     public void assignPictureToMachine(@PathVariable("id") Long machineId, @RequestBody IdInputDto input) {
 
-        machineService.assignPicture(machineId, input.id);
+        machineService.assignPictureToMachine(machineId, input.id);
     }
 
 }

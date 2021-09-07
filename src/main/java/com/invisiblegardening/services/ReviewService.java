@@ -14,5 +14,4 @@ public interface ReviewService {
     void updateReview(Long id, Review review);
     void deleteReview(Long id);
     void assignPicture(Long id, Long pictureId);
-    void assignUserData(Long id, Long userDataId);
 }

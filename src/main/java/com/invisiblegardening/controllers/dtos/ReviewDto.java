@@ -9,7 +9,8 @@ public class ReviewDto {
 
     public String value;
     public String description;
-    public UserDataDto userData;
+    public String name;
+
 
     @JsonSerialize
     Picture picture;
@@ -24,7 +25,7 @@ public class ReviewDto {
 
         dto.description = review.getDescription();
 
-        dto.userData = UserDataDto.fromUserData(review.getUserData());
+        dto.name = review.getName();
 
         dto.picture = review.getPicture();
 

@@ -16,5 +16,5 @@ public interface MachineService {
 
     void updateMachine(Long id, Machine machine);
     void deleteMachine(Long id);
-    void assignPicture(Long id, Long pictureId);
+    void assignPictureToMachine(Long id, Long pictureId);
 }

@@ -23,6 +23,9 @@ public class UserData {
     User user;
 
     @OneToOne(mappedBy = "userData")
+    Quote quote;
+
+    @OneToOne(mappedBy = "userData")
     @JsonBackReference("companyUserData")
     Company company;
 

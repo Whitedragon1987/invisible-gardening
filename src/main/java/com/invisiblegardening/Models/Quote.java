@@ -1,6 +1,7 @@
 package com.invisiblegardening.Models;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -10,10 +11,14 @@ public class Quote {
     @GeneratedValue
     Long id;
 
-    String quoteDescription;
+    String description;
+    Date date;
 
-    @Lob
-    byte[] situation;
+    @OneToOne
+    Picture picture;
+
+    @OneToOne
+    UserData userData;
 
     @OneToMany(mappedBy = "quote")
     List<Request> requestList;
@@ -23,11 +28,19 @@ public class Quote {
     }
 
     public String getQuoteDescription() {
-        return quoteDescription;
+        return description;
     }
 
-    public byte[] getSituation() {
-        return situation;
+    public Date getDate() {
+        return date;
+    }
+
+    public Picture getPicture() {
+        return picture;
+    }
+
+    public UserData getUserData() {
+        return userData;
     }
 
     public void setId(Long id) {
@@ -35,11 +48,18 @@ public class Quote {
     }
 
     public void setQuoteDescription(String quoteDescription) {
-        this.quoteDescription = quoteDescription;
+        this.description = quoteDescription;
     }
 
-    public void setSituation(byte[] situation) {
-        this.situation = situation;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
+    public void setPicture(Picture picture) {
+        this.picture = picture;
+    }
+
+    public void setUserData(UserData userData) {
+        this.userData = userData;
+    }
 }

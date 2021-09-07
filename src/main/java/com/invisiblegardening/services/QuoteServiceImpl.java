@@ -2,7 +2,9 @@ package com.invisiblegardening.services;
 
 import com.invisiblegardening.Exceptions.RecordNotFoundException;
 import com.invisiblegardening.Models.Quote;
+import com.invisiblegardening.repositories.PictureRepository;
 import com.invisiblegardening.repositories.QuoteRepository;
+import com.invisiblegardening.repositories.UserDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,12 +15,18 @@ import java.util.List;
 @Service
 public class QuoteServiceImpl implements QuoteService {
     private QuoteRepository quoteRepository;
+    private PictureRepository pictureRepository;
+    private UserDataRepository userDataRepository;
 
 
     @Autowired
-    public QuoteServiceImpl(QuoteRepository quoteRepository) {
+    public QuoteServiceImpl(QuoteRepository quoteRepository,
+                            PictureRepository pictureRepository,
+                            UserDataRepository userDataRepository) {
 
         this.quoteRepository = quoteRepository;
+        this.pictureRepository = pictureRepository;
+        this.userDataRepository = userDataRepository;
 
     }
 
@@ -47,10 +55,22 @@ public class QuoteServiceImpl implements QuoteService {
     }
 
     @Override
-    public Quote saveQuote(Quote quote) {
+    public Quote saveQuote(Quote quote, Long userDataId) {
 
-        return quoteRepository.save(quote);
+        var optionalUserData = userDataRepository.findById(userDataId);
 
+        if (optionalUserData.isPresent()) {
+            var userData = optionalUserData.get();
+
+            quote.setUserData(userData);
+
+            return quoteRepository.save(quote);
+
+        } else {
+
+            throw new RecordNotFoundException();
+
+        }
     }
 
     @Override
@@ -60,39 +80,52 @@ public class QuoteServiceImpl implements QuoteService {
 
     }
 
+
     @Override
-    public void uploadSituation(Long id, MultipartFile file) throws IOException {
+    public void assignPictureToQuote(Long id, Long pictureId) {
 
         var optionalQuote = quoteRepository.findById(id);
 
-        if (optionalQuote.isPresent()) {
+        var optionalPicture = pictureRepository.findById(pictureId);
+
+        if (optionalQuote.isPresent() && optionalPicture.isPresent()) {
 
             var quote = optionalQuote.get();
 
-            quote.setSituation(file.getBytes());
+            var picture = optionalPicture.get();
+
+            quote.setPicture(picture);
 
             quoteRepository.save(quote);
 
         } else {
 
-            throw new RecordNotFoundException("no file was uploaded");
+            throw new RecordNotFoundException();
 
         }
 
     }
 
     @Override
-    public byte[] getImage(Long id) {
+    public void assignUserDataToQuote(Long id, Long userDataId) {
 
         var optionalQuote = quoteRepository.findById(id);
 
-        if (optionalQuote.isPresent()) {
+        var optionalUserData = userDataRepository.findById(userDataId);
 
-            return optionalQuote.get().getSituation();
+        if (optionalQuote.isPresent() && optionalUserData.isPresent()) {
+
+            var quote = optionalQuote.get();
+
+            var userData = optionalUserData.get();
+
+            quote.setUserData(userData);
+
+            quoteRepository.save(quote);
 
         } else {
 
-            throw new RecordNotFoundException("no file was found");
+            throw new RecordNotFoundException();
 
         }
 

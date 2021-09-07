@@ -2,6 +2,7 @@ package com.invisiblegardening.controllers;
 
 import com.invisiblegardening.Exceptions.BadRequestException;
 import com.invisiblegardening.Models.Quote;
+import com.invisiblegardening.controllers.dtos.IdInputDto;
 import com.invisiblegardening.controllers.dtos.QuoteDto;
 import com.invisiblegardening.controllers.dtos.QuoteInputDto;
 import com.invisiblegardening.services.QuoteService;
@@ -57,7 +58,7 @@ public class QuoteController {
     @PostMapping
     public QuoteDto saveQuote(@RequestBody QuoteInputDto dto) {
 
-        var quote = quoteService.saveQuote(dto.toQuote());
+        var quote = quoteService.saveQuote(dto.toQuote(), dto.userDataId);
 
         return QuoteDto.fromQuote(quote);
 
@@ -70,48 +71,17 @@ public class QuoteController {
 
     }
 
-    @PostMapping("/{id}/license")
-    public void uploadSituation(@PathVariable("id") Long id, @RequestParam("file") MultipartFile file) throws IOException {
 
-        List<String> whitelist = new ArrayList<>();
 
-        whitelist.add("application/gif");
+    @PostMapping("/quote/{id}/picture")
+    public void assignPictureToQuote(@PathVariable("id") Long quoteId, @RequestBody IdInputDto input) {
 
-        whitelist.add("application/jpe");
-
-        whitelist.add("application/jpeg");
-
-        boolean valid = false;
-
-        for (String s : whitelist) {
-
-            if (file.getContentType().equals(s)) {
-
-                valid = true;
-
-                break;
-
-            }
-
-        }
-
-        if (file.getContentType() == null || !valid) {
-
-            throw new BadRequestException();
-
-        }
-
-        quoteService.uploadSituation(id, file);
-
+        quoteService.assignPictureToQuote(quoteId, input.id);
     }
 
-    @GetMapping("/{id}/situation")
-    public ResponseEntity<byte[]> getImage(@PathVariable("id") Long id) {
+    @PostMapping("/{id}/userdata")
+    public void assignUserDataToQuote(@PathVariable("id") Long quoteId, @RequestBody IdInputDto input) {
 
-        var situationBytes = quoteService.getImage(id);
-
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment").body(situationBytes);
-
+        quoteService.assignUserDataToQuote(quoteId, input.id);
     }
-
 }
