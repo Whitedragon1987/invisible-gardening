@@ -14,8 +14,6 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
 
     List<Request> findByJob(Job job);
 
-    List<Request> findByQuote(Quote quote);
-
     List<Request> findByUserData(UserData userData);
 
     List<Request> findByRequestEndTimeBetweenAndMachine(LocalDateTime startTime, LocalDateTime endTime, Machine machine);

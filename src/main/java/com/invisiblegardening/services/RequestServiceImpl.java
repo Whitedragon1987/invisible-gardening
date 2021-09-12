@@ -9,6 +9,7 @@ import com.invisiblegardening.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class RequestServiceImpl implements RequestService {
     private UserDataRepository userDataRepository;
     private MachineRepository machineRepository;
     private JobRepository jobRepository;
-    private QuoteRepository quoteRepository;
+
 
     @Autowired
     public RequestServiceImpl(RequestRepository requestRepository,
@@ -27,9 +28,7 @@ public class RequestServiceImpl implements RequestService {
 
                               MachineRepository machineRepository,
 
-                              JobRepository jobRepository,
-
-                              QuoteRepository quoteRepository){
+                              JobRepository jobRepository ){
 
         this.requestRepository = requestRepository;
 
@@ -38,8 +37,6 @@ public class RequestServiceImpl implements RequestService {
         this.machineRepository = machineRepository;
 
         this.jobRepository = jobRepository;
-
-        this.quoteRepository = quoteRepository;
 
     }
 
@@ -114,25 +111,6 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public List<Request> getRequestsForQuote(Long quoteId) {
-
-        var optionalQuote = quoteRepository.findById(quoteId);
-
-        if (optionalQuote.isPresent()) {
-
-            var quote = optionalQuote.get();
-
-            return requestRepository.findByQuote(quote);
-
-        } else {
-
-            throw new RecordNotFoundException("no requests for quote");
-
-        }
-
-    }
-
-    @Override
     public Request getRequest(Long id) {
 
         var optionalRequest = requestRepository.findById(id);
@@ -150,7 +128,8 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public void planRequest(Long machineId, Long jobId,  Long userDataId, Long quoteId, LocalDateTime requestStartTime, LocalDateTime requestEndTime) {
+    @Transactional
+    public void planRequest(Long machineId, Long jobId,  Long userDataId, LocalDateTime requestStartTime, LocalDateTime requestEndTime) {
 
         var optionalUserData = userDataRepository.findById(userDataId);
 
@@ -158,40 +137,35 @@ public class RequestServiceImpl implements RequestService {
 
         var optionalJob = jobRepository.findById(jobId);
 
-        var optionalQuote = quoteRepository.findById(quoteId);
-
-
         if (optionalUserData.isEmpty() || (optionalMachine.isEmpty() && optionalJob.isEmpty() )) {
 
             throw new BadRequestException("missing information");
 
         }
 
-
         var userData = optionalUserData.get();
-
-        var machine = optionalMachine.get();
-
-        var job = optionalJob.get();
-
-        var quote = optionalQuote.get();
-
-
-        if(machine != null) {
-
-            validateRequestedSlotIsFreeMachine(requestStartTime, requestEndTime, machine);
-
-        }
 
         var request = new Request();
 
         request.setUserData(userData);
 
-        request.setMachine(machine);
+        if (optionalMachine.isPresent()) {
 
-        request.setJob(job);
+            var machine = optionalMachine.get();
 
-        request.setQuote(quote);
+            validateRequestedSlotIsFreeMachine(requestStartTime, requestEndTime, machine);
+
+            request.setMachine(machine);
+
+        }
+
+        if (optionalJob.isPresent()){
+
+            var job = optionalJob.get();
+
+            request.setJob(job);
+
+        }
 
         request.setRequestStartTime(requestStartTime);
 

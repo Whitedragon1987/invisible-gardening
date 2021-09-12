@@ -6,22 +6,21 @@ import java.time.LocalDateTime;
 
 public class RequestInputDto {
 
-    public Long id;
     public Long machineId;
     public Long jobId;
     public Long userDataId;
-    public Long quoteId;
 
-    public LocalDateTime startTime;
-    public LocalDateTime endTime;
+
+    public LocalDateTime requestStartTime;
+    public LocalDateTime requestEndTime;
 
     public Request toRequest() {
 
         var request = new Request();
 
-        request.setRequestStartTime(startTime);
+        request.setRequestStartTime(requestStartTime);
 
-        request.setRequestEndTime(endTime);
+        request.setRequestEndTime(requestEndTime);
 
         return request;
     }

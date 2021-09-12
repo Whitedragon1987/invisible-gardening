@@ -13,15 +13,13 @@ public interface RequestService {
 
     List<Request> getRequestsForJob(Long jobId);
 
-    List<Request> getRequestsForQuote(Long quoteId);
-
     List<Request> getRequestsForUserData(Long userDataId);
 
     List<Request> getRequests();
 
     Request getRequest(Long requestId);
 
-    void planRequest(Long machineId, Long jobId, Long quoteId, Long customerDataId, LocalDateTime plannedStartTime, LocalDateTime plannedEndTime);
+    void planRequest(Long machineId, Long jobId, Long userDataId, LocalDateTime requestStartTime, LocalDateTime requestEndTime);
 
     Request completeRequest(Long requestId, LocalDateTime actualStartTime, LocalDateTime actualEndTime);
 

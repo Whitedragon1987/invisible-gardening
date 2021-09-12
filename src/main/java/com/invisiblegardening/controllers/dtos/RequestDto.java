@@ -3,7 +3,7 @@ package com.invisiblegardening.controllers.dtos;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.invisiblegardening.Models.Request;
-import com.invisiblegardening.Models.UserData;
+
 
 import java.time.LocalDateTime;
 
@@ -12,7 +12,7 @@ public class RequestDto {
     Long id;
 
     @JsonSerialize
-    UserData userData;
+    UserDataDto userData;
 
     @JsonSerialize
     MachineDto machine;
@@ -20,14 +20,11 @@ public class RequestDto {
     @JsonSerialize
     JobDto job;
 
-//    @JsonSerialize
-//    QuoteDto quote;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    LocalDateTime requestStartTime;
 
     @JsonSerialize(using = LocalDateTimeSerializer.class)
-    LocalDateTime startTime;
-
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    LocalDateTime endTime;
+    LocalDateTime requestEndTime;
 
     public static RequestDto fromRequest(Request request) {
 
@@ -35,17 +32,15 @@ public class RequestDto {
 
         dto.id = request.getId();
 
-        dto.userData = request.getUserData();
+        dto.userData = UserDataDto.fromUserData(request.getUserData());
 
         dto.machine = MachineDto.fromMachine(request.getMachine());
 
         dto.job = JobDto.fromJob(request.getJob());
 
-//        dto.quote = QuoteDto.fromQuote(request.getQuote());
+        dto.requestStartTime = request.getRequestStartTime();
 
-        dto.startTime = request.getRequestStartTime();
-
-        dto.endTime = request.getRequestEndTime();
+        dto.requestEndTime = request.getRequestEndTime();
 
         return dto;
 

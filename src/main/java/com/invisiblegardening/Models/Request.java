@@ -29,10 +29,6 @@ public class Request {
     @ManyToOne
     Job job;
 
-    @ManyToOne
-    Quote quote;
-
-
     public Long getId() {
 
         return id;
@@ -87,12 +83,6 @@ public class Request {
 
     }
 
-    public Quote getQuote() {
-
-        return quote;
-
-    }
-
     public void setId(Long id) {
 
         this.id = id;
@@ -144,12 +134,6 @@ public class Request {
     public void setJob(Job job) {
 
         this.job = job;
-
-    }
-
-    public void setQuote(Quote quote) {
-
-        this.quote = quote;
 
     }
 

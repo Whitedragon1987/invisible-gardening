@@ -29,7 +29,6 @@ public class RequestController {
     public List<RequestDto> getRequests(@RequestParam(value = "machineId", required = false) Long machineId,
                                         @RequestParam(value = "jobId", required = false) Long jobId,
                                         @RequestParam(value = "customerDataId", required = false) Long userDataId,
-                                        @RequestParam(value = "quoteId", required = false) Long quoteId,
                                         @RequestParam(value = "start", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
                                         @RequestParam(value = "end", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end) {
 
@@ -37,28 +36,23 @@ public class RequestController {
 
         List<Request> requests;
 
-        if (machineId == null && jobId == null && userDataId == null && quoteId == null && start == null && end == null) {
+        if (machineId == null && jobId == null && userDataId == null && start == null && end == null) {
 
             requests = requestService.getRequests();
 
-        } else if (machineId != null && jobId == null && quoteId == null && userDataId == null && start == null && end == null) {
+        } else if (machineId != null && jobId == null && userDataId == null && start == null && end == null) {
 
             requests = requestService.getRequestsForMachine(machineId);
 
-        } else if (jobId != null && userDataId == null && machineId == null && quoteId == null && start == null && end == null) {
+        } else if (jobId != null && userDataId == null && machineId == null && start == null && end == null) {
 
            requests = requestService.getRequestsForJob(jobId);
 
-        } else if (userDataId != null && jobId == null && machineId == null && quoteId == null && start == null && end == null) {
+        } else if (userDataId != null && jobId == null && machineId == null &&  start == null && end == null) {
 
             requests = requestService.getRequestsForUserData(userDataId);
 
-        }
-        else if (userDataId == null && jobId == null && machineId == null && quoteId != null && start == null && end == null) {
-
-            requests = requestService.getRequestsForQuote(quoteId);
-
-        } else if (start != null && end != null && userDataId == null && quoteId == null && jobId == null && machineId == null) {
+        } else if (start != null && end != null && userDataId == null &&  jobId == null && machineId == null) {
 
             requests = requestService.getRequestBetweenDates(start, end);
 
@@ -85,7 +79,7 @@ public class RequestController {
     @PostMapping
     public void saveRequest(@RequestBody RequestInputDto dto) {
 
-        requestService.planRequest(dto.machineId, dto.jobId, dto.userDataId, dto.quoteId, dto.startTime, dto.endTime);
+        requestService.planRequest(dto.machineId, dto.jobId, dto.userDataId, dto.requestStartTime, dto.requestEndTime);
 
     }
 

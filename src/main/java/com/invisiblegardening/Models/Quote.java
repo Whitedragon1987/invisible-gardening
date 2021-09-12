@@ -20,8 +20,6 @@ public class Quote {
     @OneToOne
     UserData userData;
 
-    @OneToMany(mappedBy = "quote")
-    List<Request> requestList;
 
     public Long getId() {
         return id;
