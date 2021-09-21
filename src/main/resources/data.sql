@@ -41,7 +41,7 @@ insert into job (id, job_name, job_description, employee_needed, picture_id) VAL
 insert into job (id, job_name, job_description, employee_needed, employee_id, picture_id) VALUES( 1002, 'Tuinonderhoud', 'Het snoeien, maaien en verfraaien van uw tuin', true, 1002, 1008);
 insert into job (id, job_name, job_description, employee_needed, employee_id, picture_id) VALUES( 1003, 'Zwembad aanleggen', 'Nieuw zwembad aanleggen in uw tuin', true, 1002, 1002);
 
-insert into request (id, user_data_id, machine_id, job_id, request_start_time, request_end_time ) VALUES( 1001, 1001, 1001, 1001, '2021-09-12T08:00:00', '2021-09-14T14:00:00');
+-- insert into request (id, user_data_id, machine_id, job_id, request_start_time, request_end_time ) VALUES( 1001, 1001, 1001, 1001, '2021-09-12T08:00:00', '2021-09-14T14:00:00');
 
 insert into review (id, description, name, value, picture_id) VALUES (1001, 'heel mooi eindresultaat', 'Kees Blok', 3, 1009);
 insert into review (id, description, name, value, picture_id) VALUES (1002, 'Een mooie speeltuin voor de kinderen aan laten leggen', 'Klaas Oosterhout', 5, 1010);

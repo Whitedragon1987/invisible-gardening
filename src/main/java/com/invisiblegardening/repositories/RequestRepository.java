@@ -10,18 +10,18 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
 
     List<Request> findByRequestStartTimeBetween(LocalDateTime start, LocalDateTime end);
 
-    List<Request> findByMachine(Machine machine);
+//    List<Request> findByMachine(Machine machine);
 
-    List<Request> findByJob(Job job);
+//    List<Request> findByJob(Job job);
 
     List<Request> findByUserData(UserData userData);
 
-    List<Request> findByRequestEndTimeBetweenAndMachine(LocalDateTime startTime, LocalDateTime endTime, Machine machine);
+//    List<Request> findByRequestEndTimeBetweenAndMachine(LocalDateTime startTime, LocalDateTime endTime, Object machine);
 
-    List<Request> findByRequestStartTimeBetweenAndMachine(LocalDateTime startTime, LocalDateTime endTime, Machine machine);
+//    List<Request> findByRequestStartTimeBetweenAndMachine(LocalDateTime startTime, LocalDateTime endTime, Object machine);
 
-    List<Request> findByRequestStartTimeBetweenAndJob(LocalDateTime startTime, LocalDateTime endTime, Job job);
+//    List<Request> findByRequestStartTimeBetweenAndJob(LocalDateTime startTime, LocalDateTime endTime, Job job);
 
-    List<Request> findByRequestEndTimeBetweenAndJob(LocalDateTime startTime, LocalDateTime endTime, Job job);
+//    List<Request> findByRequestEndTimeBetweenAndJob(LocalDateTime startTime, LocalDateTime endTime, Job job);
 
 }

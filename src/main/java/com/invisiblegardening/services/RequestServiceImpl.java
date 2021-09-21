@@ -2,6 +2,7 @@ package com.invisiblegardening.services;
 
 import com.invisiblegardening.Exceptions.BadRequestException;
 import com.invisiblegardening.Exceptions.RecordNotFoundException;
+import com.invisiblegardening.Models.Job;
 import com.invisiblegardening.Models.Machine;
 import com.invisiblegardening.Models.Request;
 import com.invisiblegardening.Models.RequestStatus;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -53,43 +56,43 @@ public class RequestServiceImpl implements RequestService {
         return requestRepository.findByRequestStartTimeBetween(start, end);
     }
 
-    @Override
-    public List<Request> getRequestsForMachine(Long machineId) {
+//    @Override
+//    public List<Request> getRequestsForMachine(Long machineId) {
+//
+//        var optionalMachine = machineRepository.findById(machineId);
+//
+//        if (optionalMachine.isPresent()) {
+//
+//            var machine = optionalMachine.get();
+//
+//            return requestRepository.findByMachine(machine);
+//
+//        } else {
+//
+//            throw new RecordNotFoundException("no requests for machine");
+//
+//        }
+//
+//    }
 
-        var optionalMachine = machineRepository.findById(machineId);
-
-        if (optionalMachine.isPresent()) {
-
-            var machine = optionalMachine.get();
-
-            return requestRepository.findByMachine(machine);
-
-        } else {
-
-            throw new RecordNotFoundException("no requests for machine");
-
-        }
-
-    }
-
-    @Override
-    public List<Request> getRequestsForJob(Long jobId) {
-
-        var optionalJob = jobRepository.findById(jobId);
-
-        if (optionalJob.isPresent()) {
-
-            var job = optionalJob.get();
-
-            return requestRepository.findByJob(job);
-
-        } else {
-
-            throw new RecordNotFoundException("no requests for job");
-
-        }
-
-    }
+//    @Override
+//    public List<Request> getRequestsForJob(Long jobId) {
+//
+//        var optionalJob = jobRepository.findById(jobId);
+//
+//        if (optionalJob.isPresent()) {
+//
+//            var job = optionalJob.get();
+//
+//            return requestRepository.findByJob(job);
+//
+//        } else {
+//
+//            throw new RecordNotFoundException("no requests for job");
+//
+//        }
+//
+//    }
 
     @Override
     public List<Request> getRequestsForUserData(Long userDataId) {
@@ -129,15 +132,28 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     @Transactional
-    public void planRequest(Long machineId, Long jobId,  Long userDataId, LocalDateTime requestStartTime, LocalDateTime requestEndTime) {
+    public void planRequest(Collection<Long> machineIdList, Collection<Long> jobIdList, Long userDataId, LocalDateTime requestStartTime, LocalDateTime requestEndTime) {
 
         var optionalUserData = userDataRepository.findById(userDataId);
 
-        var optionalMachine = machineRepository.findById(machineId);
+        var optionalMachineList = new HashSet<Machine>();
 
-        var optionalJob = jobRepository.findById(jobId);
+        for (Long machineId : machineIdList) {
 
-        if (optionalUserData.isEmpty() || (optionalMachine.isEmpty() && optionalJob.isEmpty() )) {
+//            validateRequestedSlotIsFreeMachine(requestStartTime, requestEndTime, machineId);
+
+            optionalMachineList.add(machineRepository.findById(machineId).get());
+
+        }
+
+        var optionalJobList = new HashSet<Job>();
+
+        for (Long jobId : jobIdList) {
+
+            optionalJobList.add(jobRepository.findById(jobId).get());
+        }
+
+        if (optionalUserData.isEmpty() || (optionalMachineList.isEmpty() && optionalJobList.isEmpty() )) {
 
             throw new BadRequestException("missing information");
 
@@ -149,21 +165,15 @@ public class RequestServiceImpl implements RequestService {
 
         request.setUserData(userData);
 
-        if (optionalMachine.isPresent()) {
+        if (!optionalMachineList.isEmpty()) {
 
-            var machine = optionalMachine.get();
-
-            validateRequestedSlotIsFreeMachine(requestStartTime, requestEndTime, machine);
-
-            request.setMachine(machine);
+            request.setMachineIdList(optionalMachineList);
 
         }
 
-        if (optionalJob.isPresent()){
+        if (!optionalJobList.isEmpty()){
 
-            var job = optionalJob.get();
-
-            request.setJob(job);
+            request.setJobIdList(optionalJobList);
 
         }
 
@@ -177,21 +187,21 @@ public class RequestServiceImpl implements RequestService {
 
     }
 
-    private void validateRequestedSlotIsFreeMachine(LocalDateTime startTime, LocalDateTime endTime, Machine machine) {
-
-        var overlappingStartRequests = requestRepository.findByRequestStartTimeBetweenAndMachine(startTime,
-                endTime, machine);
-
-        var overlappingEndRequests = requestRepository.findByRequestEndTimeBetweenAndMachine(startTime,
-                endTime, machine);
-
-        if (overlappingStartRequests.size() > 0 || overlappingEndRequests.size() > 0) {
-
-            throw new BadRequestException();
-
-        }
-
-    }
+//    private void validateRequestedSlotIsFreeMachine(LocalDateTime startTime, LocalDateTime endTime, Object machine) {
+//
+//        var overlappingStartRequests = requestRepository.findByRequestStartTimeBetweenAndMachine(startTime,
+//                endTime, machine);
+//
+//        var overlappingEndRequests = requestRepository.findByRequestEndTimeBetweenAndMachine(startTime,
+//                endTime, machine);
+//
+//        if (overlappingStartRequests.size() > 0 || overlappingEndRequests.size() > 0) {
+//
+//            throw new BadRequestException();
+//
+//        }
+//
+//    }
 
     @Override
     public Request completeRequest(Long requestId, LocalDateTime actualStartTime, LocalDateTime actualEndTime) {

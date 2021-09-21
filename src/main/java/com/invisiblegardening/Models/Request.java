@@ -1,10 +1,9 @@
 package com.invisiblegardening.Models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Request {
@@ -23,11 +22,11 @@ public class Request {
     @ManyToOne
     UserData userData;
 
-    @ManyToOne
-    Machine machine;
+    @ManyToMany(mappedBy= "requestList")
+    Set<Machine> machineIdList = new HashSet<>();
 
-    @ManyToOne
-    Job job;
+    @ManyToMany(mappedBy = "requestList")
+    Set<Job> jobIdList = new HashSet<>();
 
     public Long getId() {
 
@@ -71,16 +70,12 @@ public class Request {
 
     }
 
-    public Machine getMachine() {
-
-        return machine;
-
+    public Set<Machine> getMachineIdList() {
+        return machineIdList;
     }
 
-    public Job getJob() {
-
-        return job;
-
+    public Set<Job> getJobIdList() {
+        return jobIdList;
     }
 
     public void setId(Long id) {
@@ -125,16 +120,11 @@ public class Request {
 
     }
 
-    public void setMachine(Machine machine) {
-
-        this.machine = machine;
-
+    public void setMachineIdList(HashSet<Machine> machines) {
+        this.machineIdList = machines;
     }
 
-    public void setJob(Job job) {
-
-        this.job = job;
-
+    public void setJobIdList(HashSet<Job> jobs) {
+        this.jobIdList = jobs;
     }
-
 }

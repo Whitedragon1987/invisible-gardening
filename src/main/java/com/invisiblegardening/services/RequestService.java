@@ -3,15 +3,16 @@ package com.invisiblegardening.services;
 import com.invisiblegardening.Models.Request;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 
 public interface RequestService {
 
     List<Request> getRequestBetweenDates(LocalDateTime start, LocalDateTime end);
 
-    List<Request> getRequestsForMachine(Long machineId);
+//    List<Request> getRequestsForMachine(Long machineId);
 
-    List<Request> getRequestsForJob(Long jobId);
+//    List<Request> getRequestsForJob(Long jobId);
 
     List<Request> getRequestsForUserData(Long userDataId);
 
@@ -19,7 +20,7 @@ public interface RequestService {
 
     Request getRequest(Long requestId);
 
-    void planRequest(Long machineId, Long jobId, Long userDataId, LocalDateTime requestStartTime, LocalDateTime requestEndTime);
+    void planRequest(Collection<Long> machineIdList, Collection<Long> jobIdList, Long userDataId, LocalDateTime requestStartTime, LocalDateTime requestEndTime);
 
     Request completeRequest(Long requestId, LocalDateTime actualStartTime, LocalDateTime actualEndTime);
 

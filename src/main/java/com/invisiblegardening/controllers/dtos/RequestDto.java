@@ -6,19 +6,23 @@ import com.invisiblegardening.Models.Request;
 
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class RequestDto {
 
-    Long id;
+    public Long id;
+//    public Set<MachineDto> machineSet;
 
     @JsonSerialize
     UserDataDto userData;
 
-    @JsonSerialize
-    MachineDto machine;
-
-    @JsonSerialize
-    JobDto job;
+//    @JsonSerialize
+//    MachineDto machine;
+//
+//    @JsonSerialize
+//    Set<JobDto> jobSet;
 
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     LocalDateTime requestStartTime;
@@ -34,9 +38,9 @@ public class RequestDto {
 
         dto.userData = UserDataDto.fromUserData(request.getUserData());
 
-        dto.machine = MachineDto.fromMachine(request.getMachine());
-
-        dto.job = JobDto.fromJob(request.getJob());
+//        dto.machineSet = request.getMachineIdList());
+//
+//        dto.jobSet = JobDto.fromJob(request.getJob());
 
         dto.requestStartTime = request.getRequestStartTime();
 

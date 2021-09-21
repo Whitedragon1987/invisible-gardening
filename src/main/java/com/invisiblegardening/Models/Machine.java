@@ -1,8 +1,12 @@
 package com.invisiblegardening.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Machine {
@@ -21,8 +25,12 @@ public class Machine {
     @OneToOne
     Picture picture;
 
-    @OneToMany(mappedBy = "machine")
-    List<Request> requestList;
+    @ManyToMany
+    @JoinTable(
+            name = "requested_machines",
+            joinColumns = @JoinColumn(name = "machine_id"),
+            inverseJoinColumns = @JoinColumn(name = "request_id"))
+    Set<Request> requestList = new HashSet<>();
 
     public Long getId() {
 

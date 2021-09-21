@@ -3,7 +3,9 @@ package com.invisiblegardening.Models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Job {
@@ -22,8 +24,12 @@ public class Job {
     @ManyToOne
     Employee employee;
 
-    @OneToMany(mappedBy = "job")
-    List<Request> requestList;
+    @ManyToMany
+    @JoinTable(
+            name = "requested_jobs",
+            joinColumns = @JoinColumn(name = "job_id"),
+            inverseJoinColumns = @JoinColumn(name = "request_id"))
+    Set<Request> requestList = new HashSet<>();
 
     public Long getId() {
 

@@ -3,11 +3,12 @@ package com.invisiblegardening.controllers.dtos;
 import com.invisiblegardening.Models.Request;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 
 public class RequestInputDto {
 
-    public Long machineId;
-    public Long jobId;
+    public Collection<Long> machineIdList;
+    public Collection<Long> jobIdList;
     public Long userDataId;
 
 
