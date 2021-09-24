@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 
 @RestController
@@ -28,7 +27,7 @@ public class RequestController {
     }
 
     @GetMapping
-    public List<RequestDto> getRequests(@RequestParam(value = "customerDataId", required = false) Long userDataId,
+    public List<RequestDto> getRequests(@RequestParam(value = "userDataId", required = false) Long userDataId,
                                         @RequestParam(value = "start", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
                                         @RequestParam(value = "end", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end) {
 

@@ -1,5 +1,7 @@
 package com.invisiblegardening.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -22,11 +24,13 @@ public class Request {
     @ManyToOne
     UserData userData;
 
-    @ManyToMany(mappedBy= "requestList")
-    Set<Machine> machineIdList = new HashSet<>();
+    @OneToMany(mappedBy = "request")
+    @JsonIgnore
+    Set<RequestMachine> requestMachines;
 
     @ManyToMany(mappedBy = "requestList")
     Set<Job> jobIdList = new HashSet<>();
+
 
     public Long getId() {
 
@@ -70,12 +74,12 @@ public class Request {
 
     }
 
-    public Set<Machine> getMachineIdList() {
-        return machineIdList;
-    }
-
     public Set<Job> getJobIdList() {
         return jobIdList;
+    }
+
+    public Set<RequestMachine> getRequestMachines() {
+        return requestMachines;
     }
 
     public void setId(Long id) {
@@ -120,8 +124,8 @@ public class Request {
 
     }
 
-    public void setMachineIdList(HashSet<Machine> machines) {
-        this.machineIdList = machines;
+    public void setRequestMachines(Set<RequestMachine> requestMachines) {
+        this.requestMachines = requestMachines;
     }
 
     public void setJobIdList(HashSet<Job> jobs) {
