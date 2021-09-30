@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -26,10 +28,11 @@ public class Request {
 
     @OneToMany(mappedBy = "request")
     @JsonIgnore
-    Set<RequestMachine> requestMachines;
+    Collection<RequestMachine> requestMachines;
 
-    @ManyToMany(mappedBy = "requestList")
-    Set<Job> jobIdList = new HashSet<>();
+    @OneToMany(mappedBy = "request")
+    @JsonIgnore
+    Set<RequestJob> jobIdList = new HashSet<>();
 
 
     public Long getId() {
@@ -74,11 +77,11 @@ public class Request {
 
     }
 
-    public Set<Job> getJobIdList() {
+    public Set<RequestJob> getJobIdList() {
         return jobIdList;
     }
 
-    public Set<RequestMachine> getRequestMachines() {
+    public Collection<RequestMachine> getRequestMachines() {
         return requestMachines;
     }
 
@@ -124,11 +127,11 @@ public class Request {
 
     }
 
-    public void setRequestMachines(Set<RequestMachine> requestMachines) {
+    public void setRequestMachines(Collection<RequestMachine> requestMachines) {
         this.requestMachines = requestMachines;
     }
 
-    public void setJobIdList(HashSet<Job> jobs) {
-        this.jobIdList = jobs;
+    public void setJobIdList(Set<RequestJob> jobIdList) {
+        this.jobIdList = jobIdList;
     }
 }

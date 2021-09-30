@@ -25,12 +25,9 @@ public class Machine {
     @OneToOne
     Picture picture;
 
-    @ManyToMany
-    @JoinTable(
-            name = "requested_machines",
-            joinColumns = @JoinColumn(name = "machine_id"),
-            inverseJoinColumns = @JoinColumn(name = "request_id"))
-    Set<Request> requestList = new HashSet<>();
+    @OneToMany(mappedBy = "request")
+    @JsonIgnore
+    List<RequestMachine> requestMachines;
 
     public Long getId() {
 
@@ -78,6 +75,10 @@ public class Machine {
         return picture;
     }
 
+    public List<RequestMachine> getRequestMachines() {
+        return requestMachines;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -120,5 +121,9 @@ public class Machine {
 
     public void setPicture(Picture picture) {
         this.picture = picture;
+    }
+
+    public void setRequestMachines(List<RequestMachine> requestMachines) {
+        this.requestMachines = requestMachines;
     }
 }

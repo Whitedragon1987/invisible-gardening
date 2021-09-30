@@ -82,6 +82,7 @@ public class RequestServiceImpl implements RequestService,RequestJobService, Req
     }
 
     @Override
+    @Transactional
     public Request getRequest(Long id) {
 
         var optionalRequest = requestRepository.findById(id);
@@ -114,7 +115,6 @@ public class RequestServiceImpl implements RequestService,RequestJobService, Req
 
         request.setId(requestSize + 1);
 
-
         request.setRequestStartTime(requestStartTime);
 
         request.setRequestEndTime(requestEndTime);
@@ -130,6 +130,8 @@ public class RequestServiceImpl implements RequestService,RequestJobService, Req
             addRequestMachine(requestId, machineId);
 
         }
+
+        request.setRequestMachines(requestMachineRepository.findAllByRequestId(requestId));
 
         for (Long jobId : jobIdList) {
 
