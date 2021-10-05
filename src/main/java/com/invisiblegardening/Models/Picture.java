@@ -1,5 +1,7 @@
 package com.invisiblegardening.Models;
 
+import org.hibernate.annotations.Fetch;
+
 import javax.persistence.*;
 
 @Entity

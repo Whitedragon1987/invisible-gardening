@@ -1,6 +1,7 @@
 package com.invisiblegardening.Models;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 
 @Entity
 public class RequestMachine {

@@ -11,7 +11,6 @@ public class RequestInputDto {
     public Collection<Long> jobIdList;
     public Long userDataId;
 
-
     public LocalDateTime requestStartTime;
     public LocalDateTime requestEndTime;
 

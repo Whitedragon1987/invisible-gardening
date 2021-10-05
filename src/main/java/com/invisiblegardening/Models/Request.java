@@ -1,6 +1,8 @@
 package com.invisiblegardening.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -27,12 +29,15 @@ public class Request {
     UserData userData;
 
     @OneToMany(mappedBy = "request")
+    // (fetch= FetchType.EAGER) werkt niet met meerdere in een entiteit door bug in Hibernate
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JsonIgnore
     Collection<RequestMachine> requestMachines;
 
     @OneToMany(mappedBy = "request")
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JsonIgnore
-    Set<RequestJob> jobIdList = new HashSet<>();
+    Collection<RequestJob> requestJobs;
 
 
     public Long getId() {
@@ -77,8 +82,8 @@ public class Request {
 
     }
 
-    public Set<RequestJob> getJobIdList() {
-        return jobIdList;
+    public Collection<RequestJob> getRequestJobs() {
+        return requestJobs;
     }
 
     public Collection<RequestMachine> getRequestMachines() {
@@ -131,7 +136,7 @@ public class Request {
         this.requestMachines = requestMachines;
     }
 
-    public void setJobIdList(Set<RequestJob> jobIdList) {
-        this.jobIdList = jobIdList;
+    public void setRequestJobs(Collection<RequestJob> requestJobs) {
+        this.requestJobs = requestJobs;
     }
 }

@@ -2,8 +2,11 @@ package com.invisiblegardening.controllers;
 
 import com.invisiblegardening.Exceptions.BadRequestException;
 import com.invisiblegardening.Models.Request;
+import com.invisiblegardening.Models.RequestMachine;
 import com.invisiblegardening.controllers.dtos.RequestDto;
 import com.invisiblegardening.controllers.dtos.RequestInputDto;
+import com.invisiblegardening.services.RequestJobService;
+import com.invisiblegardening.services.RequestMachineService;
 import com.invisiblegardening.services.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,11 +22,17 @@ import java.util.List;
 @RequestMapping("requests")
 public class RequestController {
     private final RequestService requestService;
+    private final RequestMachineService requestMachineService;
+    private final RequestJobService requestJobService;
 
     @Autowired
-    public RequestController(RequestService requestService) {
+    public RequestController(RequestService requestService,
+                             RequestMachineService requestMachineService,
+                             RequestJobService requestJobService) {
 
         this.requestService = requestService;
+        this.requestMachineService = requestMachineService;
+        this.requestJobService = requestJobService;
     }
 
     @GetMapping
@@ -79,6 +88,19 @@ public class RequestController {
     public void saveRequest(@RequestBody RequestInputDto dto) {
 
         requestService.planRequest(dto.machineIdList, dto.jobIdList, dto.userDataId, dto.requestStartTime, dto.requestEndTime);
+
+        for (Long machineId : dto.machineIdList) {
+
+            requestMachineService.addRequestMachine((requestService.getRequests().size()), machineId);
+
+        }
+
+        for (Long jobId : dto.jobIdList) {
+
+            requestJobService.addRequestJob((requestService.getRequests().size()), jobId);
+
+        }
+
 
     }
 

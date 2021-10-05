@@ -14,7 +14,7 @@ import java.util.HashSet;
 import java.util.List;
 
 @Service
-public class RequestServiceImpl implements RequestService,RequestJobService, RequestMachineService {
+public class RequestServiceImpl implements RequestService{
     private RequestRepository requestRepository;
     private UserDataRepository userDataRepository;
     private RequestMachineRepository requestMachineRepository;
@@ -125,18 +125,19 @@ public class RequestServiceImpl implements RequestService,RequestJobService, Req
 
         var requestId = request.getId();
 
-        for (Long machineId : machineIdList) {
-
-            addRequestMachine(requestId, machineId);
-
-        }
+//        for (Long machineId : machineIdList) {
+//
+//            addRequestMachine(requestId, machineId);
+//
+//        }
 
         request.setRequestMachines(requestMachineRepository.findAllByRequestId(requestId));
 
-        for (Long jobId : jobIdList) {
-
-            addRequestJob(requestId, jobId);
-        }
+//        for (Long jobId : jobIdList) {
+//
+//            addRequestJob(requestId, jobId);
+//        }
+        request.setRequestJobs(requestJobRepository.findAllByRequestId(requestId));
 
         if (optionalUserData.isEmpty() || (machineIdList.isEmpty() && jobIdList.isEmpty() )) {
 
@@ -189,94 +190,94 @@ public class RequestServiceImpl implements RequestService,RequestJobService, Req
 
     }
 
-    @Override
-    public Collection<RequestMachine> getAllMachineResults() {
-        Collection<RequestMachine> requestMachines = requestMachineRepository.findAll();
-        return requestMachines;
-    }
-
-    @Override
-    public Collection<Machine> getRequestMachinesByRequestId(long requestId) {
-        Collection<Machine> machines = new HashSet<>();
-        Collection<RequestMachine> requestMachines = requestMachineRepository.findAllByRequestId(requestId);
-        for (RequestMachine requestmachine : requestMachines) {
-            machines.add(requestmachine.getMachine());
-        }
-        return machines;
-    }
-
-    @Override
-    public Collection<Request> getRequestMachinesByMachineId(long machineId) {
-        Collection<Request> requests = new HashSet<>();
-        Collection<RequestMachine> requestMachines = requestMachineRepository.findAllByRequestId(machineId);
-        for (RequestMachine requestMachine : requestMachines) {
-            requests.add(requestMachine.getRequest());
-        }
-        return requests;
-    }
-
-    @Override
-    public RequestMachine getRequestMachineById(long requestId, long machineId) {
-        return requestMachineRepository.findById(new RequestMachineKey(requestId, machineId)).orElse(null);    }
-
-    @Override
-    public RequestMachineKey addRequestMachine(long requestId, long machineId) {
-        var requestMachine = new RequestMachine();
-        if (!machineRepository.existsById(machineId)) { throw new RecordNotFoundException(); }
-        Machine machine = machineRepository.findById(machineId).orElse(null);
-        if (!requestRepository.existsById(requestId)) { throw new RecordNotFoundException(); }
-        Request request = requestRepository.findById(requestId).orElse(null);
-        requestMachine.setMachine(machine);
-        requestMachine.setRequest(request);
-        RequestMachineKey id = new RequestMachineKey(machineId, requestId);
-        requestMachine.setId(id);
-        requestMachineRepository.save(requestMachine);
-        return id;
-    }
-
-    @Override
-    public Collection<RequestJob> getAllJobResults() {
-        Collection<RequestJob> requestJobs = requestJobRepository.findAll();
-        return requestJobs;
-    }
-
-    @Override
-    public Collection<Job> getRequestJobsByRequestId(long requestId) {
-        Collection<Job> jobs = new HashSet<>();
-        Collection<RequestJob> requestJobs = requestJobRepository.findAllByRequestId(requestId);
-        for (RequestJob requestJob : requestJobs) {
-            jobs.add(requestJob.getJob());
-        }
-        return jobs;
-    }
-
-    @Override
-    public Collection<Request> getRequestJobsByJobId(long jobId) {
-        Collection<Request> requests = new HashSet<>();
-        Collection<RequestJob> requestJobs = requestJobRepository.findAllByRequestId(jobId);
-        for (RequestJob requestJob : requestJobs) {
-            requests.add(requestJob.getRequest());
-        }
-        return requests;
-    }
-
-    @Override
-    public RequestJob getRequestJobById(long requestId, long jobId) {
-        return requestJobRepository.findById(new RequestJobKey(requestId, requestId)).orElse(null);
-    }
-
-    @Override
-    public RequestJobKey addRequestJob(long requestId, long jobId) {
-        var requestJob = new RequestJob();
-        if (!jobRepository.existsById(jobId)) { throw new RecordNotFoundException(); }
-        Job job = jobRepository.findById(jobId).orElse(null);
-        if (!requestRepository.existsById(requestId)) { throw new RecordNotFoundException(); }
-        Request request = requestRepository.findById(requestId).orElse(null);
-        requestJob.setJob(job);
-        requestJob.setRequest(request);
-        RequestJobKey id = new RequestJobKey(jobId, requestId);
-        requestJob.setId(id);
-        requestJobRepository.save(requestJob);
-        return id;
-    }
+//    @Override
+//    public Collection<RequestMachine> getAllMachineResults() {
+//        Collection<RequestMachine> requestMachines = requestMachineRepository.findAll();
+//        return requestMachines;
+//    }
+//
+//    @Override
+//    public Collection<Machine> getRequestMachinesByRequestId(long requestId) {
+//        Collection<Machine> machines = new HashSet<>();
+//        Collection<RequestMachine> requestMachines = requestMachineRepository.findAllByRequestId(requestId);
+//        for (RequestMachine requestmachine : requestMachines) {
+//            machines.add(requestmachine.getMachine());
+//        }
+//        return machines;
+//    }
+//
+//    @Override
+//    public Collection<Request> getRequestMachinesByMachineId(long machineId) {
+//        Collection<Request> requests = new HashSet<>();
+//        Collection<RequestMachine> requestMachines = requestMachineRepository.findAllByRequestId(machineId);
+//        for (RequestMachine requestMachine : requestMachines) {
+//            requests.add(requestMachine.getRequest());
+//        }
+//        return requests;
+//    }
+//
+//    @Override
+//    public RequestMachine getRequestMachineById(long requestId, long machineId) {
+//        return requestMachineRepository.findById(new RequestMachineKey(requestId, machineId)).orElse(null);    }
+//
+//    @Override
+//    public RequestMachineKey addRequestMachine(long requestId, long machineId) {
+//        var requestMachine = new RequestMachine();
+//        if (!machineRepository.existsById(machineId)) { throw new RecordNotFoundException(); }
+//        Machine machine = machineRepository.findById(machineId).orElse(null);
+//        if (!requestRepository.existsById(requestId)) { throw new RecordNotFoundException(); }
+//        Request request = requestRepository.findById(requestId).orElse(null);
+//        requestMachine.setMachine(machine);
+//        requestMachine.setRequest(request);
+//        RequestMachineKey id = new RequestMachineKey(machineId, requestId);
+//        requestMachine.setId(id);
+//        requestMachineRepository.save(requestMachine);
+//        return id;
+//    }
+//
+//    @Override
+//    public Collection<RequestJob> getAllJobResults() {
+//        Collection<RequestJob> requestJobs = requestJobRepository.findAll();
+//        return requestJobs;
+//    }
+//
+//    @Override
+//    public Collection<Job> getRequestJobsByRequestId(long requestId) {
+//        Collection<Job> jobs = new HashSet<>();
+//        Collection<RequestJob> requestJobs = requestJobRepository.findAllByRequestId(requestId);
+//        for (RequestJob requestJob : requestJobs) {
+//            jobs.add(requestJob.getJob());
+//        }
+//        return jobs;
+//    }
+//
+//    @Override
+//    public Collection<Request> getRequestJobsByJobId(long jobId) {
+//        Collection<Request> requests = new HashSet<>();
+//        Collection<RequestJob> requestJobs = requestJobRepository.findAllByRequestId(jobId);
+//        for (RequestJob requestJob : requestJobs) {
+//            requests.add(requestJob.getRequest());
+//        }
+//        return requests;
+//    }
+//
+//    @Override
+//    public RequestJob getRequestJobById(long requestId, long jobId) {
+//        return requestJobRepository.findById(new RequestJobKey(requestId, requestId)).orElse(null);
+//    }
+//
+//    @Override
+//    public RequestJobKey addRequestJob(long requestId, long jobId) {
+//        var requestJob = new RequestJob();
+//        if (!jobRepository.existsById(jobId)) { throw new RecordNotFoundException(); }
+//        Job job = jobRepository.findById(jobId).orElse(null);
+//        if (!requestRepository.existsById(requestId)) { throw new RecordNotFoundException(); }
+//        Request request = requestRepository.findById(requestId).orElse(null);
+//        requestJob.setJob(job);
+//        requestJob.setRequest(request);
+//        RequestJobKey id = new RequestJobKey(jobId, requestId);
+//        requestJob.setId(id);
+//        requestJobRepository.save(requestJob);
+//        return id;
+//    }
 }
