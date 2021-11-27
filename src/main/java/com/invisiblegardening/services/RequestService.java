@@ -1,6 +1,7 @@
 package com.invisiblegardening.services;
 
 import com.invisiblegardening.Models.Request;
+import com.invisiblegardening.controllers.dtos.RequestInputDto;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -20,10 +21,8 @@ public interface RequestService {
 
     Request getRequest(Long requestId);
 
-    void planRequest(Collection<Long> machineIdList, Collection<Long> jobIdList, Long userDataId, LocalDateTime requestStartTime, LocalDateTime requestEndTime);
+    Long planRequest(Collection<Long> machineIdList, Collection<Long> jobIdList, Long userDataId, LocalDateTime requestStartTime, LocalDateTime requestEndTime);
 
-    Request completeRequest(Long requestId, LocalDateTime actualStartTime, LocalDateTime actualEndTime);
-
-    Request cancelRequest(Long requestId);
+    Request updateRequest(Long id, RequestInputDto dto);
 
 }

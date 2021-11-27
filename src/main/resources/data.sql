@@ -1,6 +1,6 @@
-insert into user_data (id, user_firstname, user_lastname, user_address, user_zipcode, user_city, user_phone_number, has_company) VALUES( 1002, 'Piet', 'Klaasens', 'Hoofdstraat2', '3312 BG', 'Oordam', '12-93458739', false);
-insert into user_data (id, user_firstname, user_lastname, user_address, user_zipcode, user_city, user_phone_number, has_company) VALUES(1003, 'Jasper', 'Dillemans', 'Straatje 23', '3312 BH', 'Oordam', '12-77789891', true);
-insert into user_data (id, user_firstname, user_lastname, user_address, user_zipcode, user_city, user_phone_number, has_company) VALUES(1001, 'Johan', 'van Oosten', 'Dorpsstraat 49', '4451 BB', 'Heinkenszand', '0611847523', true);
+insert into user_data (id, user_firstname, user_lastname, user_address, user_zipcode, user_city, user_phone_number) VALUES( 1002, 'Piet', 'Klaasens', 'Hoofdstraat2', '3312 BG', 'Oordam', '12-93458739');
+insert into user_data (id, user_firstname, user_lastname, user_address, user_zipcode, user_city, user_phone_number) VALUES(1003, 'Jasper', 'Dillemans', 'Straatje 23', '3312 BH', 'Oordam', '12-77789891');
+insert into user_data (id, user_firstname, user_lastname, user_address, user_zipcode, user_city, user_phone_number) VALUES(1001, 'Johan', 'van Oosten', 'Dorpsstraat 49', '4451 BB', 'Heinkenszand', '0611847523');
 
 INSERT INTO users (username, id, password, email, enabled, user_data_id) VALUES ('user', 1003, '$2a$10$wPHxwfsfTnOJAdgYcerBt.utdAvC24B/DWfuXfzKBSDHO0etB1ica','user@test.nl', TRUE, 1003);
 INSERT INTO users (username, id, password, email, enabled, user_data_id) VALUES ('admin', 1002, '$2a$10$wPHxwfsfTnOJAdgYcerBt.utdAvC24B/DWfuXfzKBSDHO0etB1ica', 'admin@test.nl', TRUE, 1002);
@@ -11,9 +11,6 @@ INSERT INTO authorities (username, authority) VALUES ('admin', 'ROLE_USER');
 INSERT INTO authorities (username, authority) VALUES ('admin', 'ROLE_ADMIN');
 INSERT INTO authorities (username, authority) VALUES ('johan', 'ROLE_USER');
 INSERT INTO authorities (username, authority) VALUES ('johan', 'ROLE_ADMIN');
-
-insert into company (id, company_name, company_address, company_zipcode, company_city, company_emailaddress, company_phone_number, user_data_id) VALUES( 1001, 'Van Straate', 'Straatweg 1', '3312 BC', 'Oordam', 'vStraate@info.com', '0123-323212', 1003);
-insert into company (id, company_name, company_address, company_zipcode, company_city, company_emailaddress, company_phone_number, user_data_id) VALUES( 1002, 'Van der Ploeg', 'Maximaplein 1', '3312 BJ', 'Oordam', 'vdPloeg@info.com', '0123-899645', 1001);
 
 insert into picture (id, data, name, type ) VALUES ( 1001, 100012, 'graven.jpg', 'image/jpeg');
 insert into picture (id, data, name, type ) VALUES ( 1002, 99874, 'zwembad tuin.jpg', 'image/jpeg');
@@ -41,7 +38,25 @@ insert into job (id, job_name, job_description, employee_needed, picture_id) VAL
 insert into job (id, job_name, job_description, employee_needed, employee_id, picture_id) VALUES( 1002, 'Tuinonderhoud', 'Het snoeien, maaien en verfraaien van uw tuin', true, 1002, 1008);
 insert into job (id, job_name, job_description, employee_needed, employee_id, picture_id) VALUES( 1003, 'Zwembad aanleggen', 'Nieuw zwembad aanleggen in uw tuin', true, 1002, 1002);
 
--- insert into request (id, user_data_id, machine_id, job_id, request_start_time, request_end_time ) VALUES( 1001, 1001, 1001, 1001, '2021-09-12T08:00:00', '2021-09-14T14:00:00');
+insert into request (id, user_data_id, request_start_time, request_end_time, status ) VALUES( 1001, 1001, '2021-09-12T08:00:00', '2021-09-14T14:00:00', 0);
+insert into request (id, user_data_id, request_start_time, request_end_time, status ) VALUES( 1002, 1001, '2021-10-11T08:00:00', '2021-09-14T15:00:00', 0);
+insert into request (id, user_data_id, request_start_time, request_end_time, status ) VALUES( 1003, 1001, '2021-10-12T11:00:00', '2021-09-14T16:00:00', 0);
+insert into request (id, user_data_id, request_start_time, request_end_time, status ) VALUES( 1004, 1001, '2021-10-14T13:00:00', '2021-09-14T17:00:00', 0);
+
+insert into request_machine(request_id, machine_id) values (1001, 1001);
+insert into request_machine(request_id, machine_id) values (1001, 1002);
+insert into request_machine(request_id, machine_id) values (1002, 1004);
+insert into request_machine(request_id, machine_id) values (1002, 1001);
+insert into request_machine(request_id, machine_id) values (1002, 1003);
+insert into request_machine(request_id, machine_id) values (1003, 1001);
+
+insert into request_job(request_id, job_id) values (1001, 1001);
+insert into request_job(request_id, job_id) values (1001, 1002);
+insert into request_job(request_id, job_id) values (1002, 1001);
+insert into request_job(request_id, job_id) values (1002, 1003);
+insert into request_job(request_id, job_id) values (1004, 1001);
+insert into request_job(request_id, job_id) values (1004, 1003);
+insert into request_job(request_id, job_id) values (1004, 1002);
 
 insert into review (id, description, name, value, picture_id) VALUES (1001, 'heel mooi eindresultaat', 'Kees Blok', 3, 1009);
 insert into review (id, description, name, value, picture_id) VALUES (1002, 'Een mooie speeltuin voor de kinderen aan laten leggen', 'Klaas Oosterhout', 5, 1010);

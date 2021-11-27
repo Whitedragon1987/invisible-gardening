@@ -5,6 +5,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.invisiblegardening.Models.Request;
 import com.invisiblegardening.Models.RequestJob;
 import com.invisiblegardening.Models.RequestMachine;
+import com.invisiblegardening.Models.Status;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -13,6 +14,9 @@ import java.util.Collection;
 public class RequestDto {
 
     public Long id;
+
+    @JsonSerialize
+    Status status;
 
     @JsonSerialize
     UserDataDto userData;
@@ -44,6 +48,8 @@ public class RequestDto {
         dto.requestStartTime = request.getRequestStartTime();
 
         dto.requestEndTime = request.getRequestEndTime();
+
+        dto.status = request.getStatus();
 
         return dto;
 

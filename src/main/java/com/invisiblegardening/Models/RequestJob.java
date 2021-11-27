@@ -8,7 +8,7 @@ public class RequestJob {
         @EmbeddedId
         private RequestJobKey id;
 
-        @ManyToOne
+        @ManyToOne(fetch = FetchType.LAZY)
         @MapsId("requestId")
         @JoinColumn(name = "request_id")
         private Request request;

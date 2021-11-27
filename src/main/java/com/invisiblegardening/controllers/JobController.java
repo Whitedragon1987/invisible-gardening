@@ -4,6 +4,7 @@ import com.invisiblegardening.Models.Job;
 import com.invisiblegardening.controllers.dtos.IdInputDto;
 import com.invisiblegardening.controllers.dtos.JobDto;
 import com.invisiblegardening.controllers.dtos.JobInputDto;
+import com.invisiblegardening.services.EmployeeService;
 import com.invisiblegardening.services.JobService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +18,14 @@ import java.util.List;
 @RequestMapping("jobs")
 public class JobController {
     private final JobService jobService;
+    private final EmployeeService employeeService;
 
     @Autowired
-    public  JobController(JobService jobService) {
+    public  JobController(JobService jobService,
+                          EmployeeService employeeService) {
 
         this.jobService = jobService;
+        this.employeeService = employeeService;
 
     }
 
@@ -56,15 +60,25 @@ public class JobController {
 
         var job = jobService.saveJob(dto.toJob());
 
+        if(dto.employee != null){
+
+            var jobID= job.getId();
+
+            var employeeID = dto.employee;
+
+            assignEmployeeToJob(jobID, employeeID);
+
+        }
+
         return JobDto.fromJob(job);
 
     }
 
-    @PostMapping("/{id}/employee")
+    @PostMapping("/{id}/employee/{employeeId}")
     public void assignEmployeeToJob(@PathVariable("id") Long jobId,
-                                    @RequestBody IdInputDto input) {
+                                    @PathVariable("employeeId") Long employeeId) {
 
-        jobService.assignEmployee(jobId, input.id);
+        jobService.assignEmployee(jobId, employeeId);
 
     }
 

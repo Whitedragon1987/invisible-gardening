@@ -1,6 +1,7 @@
 package com.invisiblegardening.controllers.dtos;
 
 import com.invisiblegardening.Models.Quote;
+import com.invisiblegardening.Models.Status;
 import com.invisiblegardening.Models.UserData;
 
 import java.util.Date;
@@ -15,13 +16,15 @@ public class QuoteInputDto {
 
     public Long userDataId;
 
+    public Status status;
+
     public Quote toQuote() {
 
         var quote = new Quote();
 
         quote.setId(id);
 
-        quote.setQuoteDescription(description);
+        quote.setDescription(description);
 
         quote.setDate(date);
 

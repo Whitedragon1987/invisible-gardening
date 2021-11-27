@@ -13,6 +13,7 @@ public class Quote {
 
     String description;
     Date date;
+    Status status;
 
     @OneToOne
     Picture picture;
@@ -23,10 +24,6 @@ public class Quote {
 
     public Long getId() {
         return id;
-    }
-
-    public String getQuoteDescription() {
-        return description;
     }
 
     public Date getDate() {
@@ -41,12 +38,16 @@ public class Quote {
         return userData;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getDescription() {
+        return description;
     }
 
-    public void setQuoteDescription(String quoteDescription) {
-        this.description = quoteDescription;
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setDate(Date date) {
@@ -59,5 +60,13 @@ public class Quote {
 
     public void setUserData(UserData userData) {
         this.userData = userData;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

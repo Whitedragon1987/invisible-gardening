@@ -13,7 +13,6 @@ public class UserDataDto {
     public String userZipcode;
     public String userCity;
     public String userPhoneNumber;
-    public Boolean hasCompany;
 
 
 
@@ -36,8 +35,6 @@ public class UserDataDto {
         dto.userCity = userData.getUserCity();
 
         dto.userPhoneNumber = userData.getUserPhoneNumber();
-
-        dto.hasCompany = userData.getHasCompany();
 
         return dto;
 

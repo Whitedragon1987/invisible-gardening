@@ -1,6 +1,6 @@
 package com.invisiblegardening.Models;
 
-import org.hibernate.annotations.Fetch;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 

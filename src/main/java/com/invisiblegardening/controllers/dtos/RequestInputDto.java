@@ -1,28 +1,22 @@
 package com.invisiblegardening.controllers.dtos;
 
-import com.invisiblegardening.Models.Request;
+import com.invisiblegardening.Models.Status;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
+import java.util.List;
 
 public class RequestInputDto {
 
-    public Collection<Long> machineIdList;
-    public Collection<Long> jobIdList;
+
+    public List<Long> machineIdList;
+    public List<Long> jobIdList;
     public Long userDataId;
+    public Status status;
 
     public LocalDateTime requestStartTime;
     public LocalDateTime requestEndTime;
+    public LocalDateTime confirmedStartTime;
+    public LocalDateTime confirmedEndTime;
 
-    public Request toRequest() {
-
-        var request = new Request();
-
-        request.setRequestStartTime(requestStartTime);
-
-        request.setRequestEndTime(requestEndTime);
-
-        return request;
-    }
 
 }

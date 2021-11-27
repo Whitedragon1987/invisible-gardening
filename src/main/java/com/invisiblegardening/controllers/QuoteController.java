@@ -2,9 +2,7 @@ package com.invisiblegardening.controllers;
 
 import com.invisiblegardening.Exceptions.BadRequestException;
 import com.invisiblegardening.Models.Quote;
-import com.invisiblegardening.controllers.dtos.IdInputDto;
-import com.invisiblegardening.controllers.dtos.QuoteDto;
-import com.invisiblegardening.controllers.dtos.QuoteInputDto;
+import com.invisiblegardening.controllers.dtos.*;
 import com.invisiblegardening.services.QuoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -72,6 +70,14 @@ public class QuoteController {
     }
 
 
+    @PutMapping("/{id}")
+    public QuoteDto updateRequest(@PathVariable("id") Long id, @RequestBody QuoteInputDto dto) {
+
+        quoteService.updateQuote(id, dto);
+        var quote = quoteService.getQuote(id);
+
+        return QuoteDto.fromQuote(quote);
+    }
 
     @PostMapping("/quote/{id}/picture")
     public void assignPictureToQuote(@PathVariable("id") Long quoteId, @RequestBody IdInputDto input) {

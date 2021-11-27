@@ -74,7 +74,7 @@ public class MachineController {
     }
 
     @PutMapping("/{id}")
-    public MachineDto updateMachine(@PathVariable Long id, @RequestBody Machine machine) {
+    public MachineDto updateMachine(@PathVariable("id") Long id, @RequestBody Machine machine) {
 
         machineService.updateMachine(id, machine);
 

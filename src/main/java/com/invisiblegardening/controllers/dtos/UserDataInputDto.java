@@ -11,7 +11,6 @@ public class UserDataInputDto {
     public String userZipcode;
     public String userCity;
     public String userPhoneNumber;
-    public Boolean hasCompany;
 
     public UserData toUserData() {
         var userData = new UserData();
@@ -29,8 +28,6 @@ public class UserDataInputDto {
         userData.setUserCity(userCity);
 
         userData.setUserPhoneNumber(userPhoneNumber);
-
-        userData.setHasCompany(hasCompany);
 
         return userData;
 

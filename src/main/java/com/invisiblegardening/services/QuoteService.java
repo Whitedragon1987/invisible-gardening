@@ -1,6 +1,7 @@
 package com.invisiblegardening.services;
 
 import com.invisiblegardening.Models.Quote;
+import com.invisiblegardening.controllers.dtos.QuoteInputDto;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -13,6 +14,7 @@ public interface QuoteService {
     Quote saveQuote(Quote quote, Long userDataId);
 
     void deleteQuote(Long id);
+    Quote updateQuote(Long id, QuoteInputDto dto);
     void assignUserDataToQuote(Long id, Long userDataId);
     void assignPictureToQuote(Long id, Long pictureId);
 

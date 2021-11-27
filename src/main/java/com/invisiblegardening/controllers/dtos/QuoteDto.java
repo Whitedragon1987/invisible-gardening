@@ -3,6 +3,7 @@ package com.invisiblegardening.controllers.dtos;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.invisiblegardening.Models.Picture;
 import com.invisiblegardening.Models.Quote;
+import com.invisiblegardening.Models.Status;
 import com.invisiblegardening.Models.UserData;
 
 import java.util.Date;
@@ -13,6 +14,8 @@ public class QuoteDto {
     public String description;
 
     public Date date;
+
+    public Status status;
 
     @JsonSerialize
     Picture picture;
@@ -26,7 +29,9 @@ public class QuoteDto {
 
         dto.id = quote.getId();
 
-        dto.description = quote.getQuoteDescription();
+        dto.description = quote.getDescription();
+
+        dto.status = quote.getStatus();
 
         dto.date = quote.getDate();
 

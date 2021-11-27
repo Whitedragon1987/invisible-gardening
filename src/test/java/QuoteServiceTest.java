@@ -91,7 +91,7 @@ public class QuoteServiceTest {
     public void deleteQuoteTest() {
         Quote quote1 = new Quote();
         quote1.setId(1L);
-        quote1.setQuoteDescription("test");
+        quote1.setDescription("test");
 
         quoteRepository.delete(quote1);
 

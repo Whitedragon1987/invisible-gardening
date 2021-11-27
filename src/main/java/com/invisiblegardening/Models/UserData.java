@@ -3,6 +3,7 @@ package com.invisiblegardening.Models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class UserData {
@@ -17,7 +18,7 @@ public class UserData {
     String userZipcode;
     String userCity;
     String userPhoneNumber;
-    Boolean hasCompany;
+
 
     @OneToOne(mappedBy = "userData")
     User user;
@@ -25,9 +26,8 @@ public class UserData {
     @OneToOne(mappedBy = "userData")
     Quote quote;
 
-    @OneToOne(mappedBy = "userData")
-    @JsonBackReference("companyUserData")
-    Company company;
+    @OneToMany(mappedBy = "userData")
+    List<Request> requests;
 
     public Long getId() {
 
@@ -69,10 +69,6 @@ public class UserData {
 
         return userPhoneNumber;
 
-    }
-
-    public Boolean getHasCompany() {
-        return hasCompany;
     }
 
     public void setId(Long id) {
@@ -117,7 +113,4 @@ public class UserData {
 
     }
 
-    public void setHasCompany(Boolean hasCompany) {
-        this.hasCompany = hasCompany;
-    }
 }

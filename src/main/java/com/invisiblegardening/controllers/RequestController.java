@@ -5,9 +5,7 @@ import com.invisiblegardening.Models.Request;
 import com.invisiblegardening.Models.RequestMachine;
 import com.invisiblegardening.controllers.dtos.RequestDto;
 import com.invisiblegardening.controllers.dtos.RequestInputDto;
-import com.invisiblegardening.services.RequestJobService;
-import com.invisiblegardening.services.RequestMachineService;
-import com.invisiblegardening.services.RequestService;
+import com.invisiblegardening.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +23,7 @@ public class RequestController {
     private final RequestMachineService requestMachineService;
     private final RequestJobService requestJobService;
 
+
     @Autowired
     public RequestController(RequestService requestService,
                              RequestMachineService requestMachineService,
@@ -33,41 +32,16 @@ public class RequestController {
         this.requestService = requestService;
         this.requestMachineService = requestMachineService;
         this.requestJobService = requestJobService;
+
     }
 
     @GetMapping
-    public List<RequestDto> getRequests(@RequestParam(value = "userDataId", required = false) Long userDataId,
-                                        @RequestParam(value = "start", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
-                                        @RequestParam(value = "end", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end) {
+    public List<RequestDto> getRequests() {
 
         var dtos = new ArrayList<RequestDto>();
 
-        Collection<Request> requests;
+        var requests = requestService.getRequests();
 
-        if (userDataId == null && start == null && end == null) {
-
-            requests = requestService.getRequests();
-
-//        } else if (machineId != null && jobId == null && userDataId == null && start == null && end == null) {
-//
-//            requests = requestService.getRequestsForMachine(machineId);
-//
-//        } else if (jobId != null && userDataId == null && machineId == null && start == null && end == null) {
-//
-//           requests = requestService.getRequestsForJob(jobId);
-
-        } else if (userDataId != null && start == null && end == null) {
-
-            requests = requestService.getRequestsForUserData(userDataId);
-
-        } else if (start != null && end != null && userDataId == null) {
-
-            requests = requestService.getRequestBetweenDates(start, end);
-
-        } else {
-
-            throw new BadRequestException();
-        }
 
         for (Request request : requests) {
 
@@ -87,21 +61,30 @@ public class RequestController {
     @PostMapping
     public void saveRequest(@RequestBody RequestInputDto dto) {
 
-        requestService.planRequest(dto.machineIdList, dto.jobIdList, dto.userDataId, dto.requestStartTime, dto.requestEndTime);
+        var requestId = requestService.planRequest(dto.machineIdList, dto.jobIdList, dto.userDataId, dto.requestStartTime, dto.requestEndTime);
 
         for (Long machineId : dto.machineIdList) {
 
-            requestMachineService.addRequestMachine((requestService.getRequests().size()), machineId);
+            requestMachineService.addRequestMachine(requestId, machineId);
 
         }
 
         for (Long jobId : dto.jobIdList) {
 
-            requestJobService.addRequestJob((requestService.getRequests().size()), jobId);
+            requestJobService.addRequestJob(requestId, jobId);
 
         }
 
 
+    }
+
+    @PutMapping("/{id}")
+    public RequestDto updateRequest(@PathVariable("id") Long id, @RequestBody RequestInputDto dto) {
+
+        requestService.updateRequest(id, dto);
+        var request = requestService.getRequest(id);
+
+        return RequestDto.fromRequest(request);
     }
 
 }

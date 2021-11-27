@@ -1,7 +1,6 @@
 package com.invisiblegardening.Models;
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
 
 @Entity
 public class RequestMachine {
@@ -9,7 +8,7 @@ public class RequestMachine {
     @EmbeddedId
     private RequestMachineKey id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("requestId")
     @JoinColumn(name = "request_id")
     private Request request;

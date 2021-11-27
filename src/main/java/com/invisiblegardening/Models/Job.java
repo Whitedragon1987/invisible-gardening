@@ -1,6 +1,7 @@
 package com.invisiblegardening.Models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -24,12 +25,9 @@ public class Job {
     @ManyToOne
     Employee employee;
 
-    @ManyToMany
-    @JoinTable(
-            name = "requested_jobs",
-            joinColumns = @JoinColumn(name = "job_id"),
-            inverseJoinColumns = @JoinColumn(name = "request_id"))
-    Set<Request> requestList = new HashSet<>();
+    @OneToMany(mappedBy = "request")
+    @JsonIgnore
+    List<RequestJob> requestJobs;
 
     public Long getId() {
 
@@ -63,6 +61,10 @@ public class Job {
         return picture;
     }
 
+    public List<RequestJob> getRequestJobs() {
+        return requestJobs;
+    }
+
     public void setId(Long id) {
 
         this.id = id;
@@ -93,5 +95,9 @@ public class Job {
 
     public void setPicture(Picture picture) {
         this.picture = picture;
+    }
+
+    public void setRequestJobs(List<RequestJob> requestJobs) {
+        this.requestJobs = requestJobs;
     }
 }

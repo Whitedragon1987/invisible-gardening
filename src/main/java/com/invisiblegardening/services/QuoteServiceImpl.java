@@ -2,6 +2,10 @@ package com.invisiblegardening.services;
 
 import com.invisiblegardening.Exceptions.RecordNotFoundException;
 import com.invisiblegardening.Models.Quote;
+import com.invisiblegardening.Models.Request;
+import com.invisiblegardening.Models.Status;
+import com.invisiblegardening.controllers.dtos.QuoteInputDto;
+import com.invisiblegardening.controllers.dtos.RequestInputDto;
 import com.invisiblegardening.repositories.PictureRepository;
 import com.invisiblegardening.repositories.QuoteRepository;
 import com.invisiblegardening.repositories.UserDataRepository;
@@ -59,6 +63,8 @@ public class QuoteServiceImpl implements QuoteService {
 
         var optionalUserData = userDataRepository.findById(userDataId);
 
+        quote.setStatus(Status.PLANNED);
+
         if (optionalUserData.isPresent()) {
             var userData = optionalUserData.get();
 
@@ -71,6 +77,28 @@ public class QuoteServiceImpl implements QuoteService {
             throw new RecordNotFoundException();
 
         }
+    }
+
+    @Override
+    public Quote updateQuote(Long id, QuoteInputDto dto) {
+
+        var quote = quoteRepository.findById(id).get();
+
+        quote.setId(quote.getId());
+
+        quote.setUserData(quote.getUserData());
+
+        quote.setDate(quote.getDate());
+
+        quote.setDescription(quote.getDescription());
+
+        quote.setPicture(quote.getPicture());
+
+        quote.setStatus(dto.status);
+
+        quoteRepository.save(quote);
+
+        return quote;
     }
 
     @Override

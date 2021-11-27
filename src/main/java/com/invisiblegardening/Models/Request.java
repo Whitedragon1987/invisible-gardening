@@ -7,9 +7,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
 
 @Entity
 public class Request {
@@ -23,13 +21,13 @@ public class Request {
     LocalDateTime confirmedStartTime;
     LocalDateTime confirmedEndTime;
 
-    RequestStatus status;
+    Status status;
 
     @ManyToOne
     UserData userData;
 
-    @OneToMany(mappedBy = "request")
     // (fetch= FetchType.EAGER) werkt niet met meerdere in een entiteit door bug in Hibernate
+    @OneToMany(mappedBy = "request")
     @LazyCollection(LazyCollectionOption.FALSE)
     @JsonIgnore
     Collection<RequestMachine> requestMachines;
@@ -38,7 +36,7 @@ public class Request {
     @LazyCollection(LazyCollectionOption.FALSE)
     @JsonIgnore
     Collection<RequestJob> requestJobs;
-
+    
 
     public Long getId() {
 
@@ -76,10 +74,8 @@ public class Request {
 
     }
 
-    public RequestStatus getStatus() {
-
+    public Status getStatus() {
         return status;
-
     }
 
     public Collection<RequestJob> getRequestJobs() {
@@ -126,10 +122,8 @@ public class Request {
 
     }
 
-    public void setStatus(RequestStatus status) {
-
+    public void setStatus(Status status) {
         this.status = status;
-
     }
 
     public void setRequestMachines(Collection<RequestMachine> requestMachines) {
@@ -139,4 +133,5 @@ public class Request {
     public void setRequestJobs(Collection<RequestJob> requestJobs) {
         this.requestJobs = requestJobs;
     }
+
 }
