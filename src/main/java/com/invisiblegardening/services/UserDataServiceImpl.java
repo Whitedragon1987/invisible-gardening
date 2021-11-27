@@ -1,29 +1,23 @@
 package com.invisiblegardening.services;
 
 import com.invisiblegardening.Exceptions.RecordNotFoundException;
-import com.invisiblegardening.Models.User;
 import com.invisiblegardening.Models.UserData;
 import com.invisiblegardening.repositories.UserDataRepository;
 
-import com.invisiblegardening.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UserDataServiceImpl implements UserDataService {
-    private UserDataRepository userDataRepository;
-    private UserRepository userRepository;
+    private final UserDataRepository userDataRepository;
 
     @Autowired
-    public UserDataServiceImpl(UserDataRepository userDataRepository,
-                               UserRepository userRepository) {
+    public UserDataServiceImpl(UserDataRepository userDataRepository) {
 
         this.userDataRepository = userDataRepository;
-        this.userRepository = userRepository;
 
     }
 

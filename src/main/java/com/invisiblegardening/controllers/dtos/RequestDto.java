@@ -7,7 +7,6 @@ import com.invisiblegardening.Models.RequestJob;
 import com.invisiblegardening.Models.RequestMachine;
 import com.invisiblegardening.Models.Status;
 
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.Collection;
 

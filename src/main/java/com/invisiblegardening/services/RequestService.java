@@ -9,14 +9,6 @@ import java.util.List;
 
 public interface RequestService {
 
-    List<Request> getRequestBetweenDates(LocalDateTime start, LocalDateTime end);
-
-//    List<Request> getRequestsForMachine(Long machineId);
-
-//    List<Request> getRequestsForJob(Long jobId);
-
-    List<Request> getRequestsForUserData(Long userDataId);
-
     List<Request> getRequests();
 
     Request getRequest(Long requestId);

@@ -3,7 +3,6 @@ package com.invisiblegardening.services;
 import com.invisiblegardening.Exceptions.BadRequestException;
 import com.invisiblegardening.Exceptions.RecordNotFoundException;
 import com.invisiblegardening.Models.*;
-import com.invisiblegardening.controllers.dtos.RequestDto;
 import com.invisiblegardening.controllers.dtos.RequestInputDto;
 import com.invisiblegardening.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,15 +11,14 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 
 @Service
 public class RequestServiceImpl implements RequestService{
-    private RequestRepository requestRepository;
-    private UserDataRepository userDataRepository;
-    private RequestMachineRepository requestMachineRepository;
-    private RequestJobRepository requestJobRepository;
+    private final RequestRepository requestRepository;
+    private final UserDataRepository userDataRepository;
+    private final RequestMachineRepository requestMachineRepository;
+    private final RequestJobRepository requestJobRepository;
 
 
     @Autowired
@@ -46,30 +44,6 @@ public class RequestServiceImpl implements RequestService{
     public List<Request> getRequests() {
 
         return requestRepository.findAll();
-
-    }
-
-    @Override
-    public List<Request> getRequestBetweenDates(LocalDateTime start, LocalDateTime end) {
-        return requestRepository.findByRequestStartTimeBetween(start, end);
-    }
-
-    @Override
-    public List<Request> getRequestsForUserData(Long userDataId) {
-
-        var optionalUserData = userDataRepository.findById(userDataId);
-
-        if (optionalUserData.isPresent()) {
-
-            var userData = optionalUserData.get();
-
-            return requestRepository.findByUserData(userData);
-
-        } else {
-
-            throw new RecordNotFoundException("no requests for user");
-
-        }
 
     }
 
@@ -153,7 +127,7 @@ public class RequestServiceImpl implements RequestService{
         request.setRequestJobs(requestJobRepository.findAllByRequestId(request.getId()));
 
         return request;
-    }
 
+    }
 
 }

@@ -26,4 +26,5 @@ public interface UserService {
     public abstract void removeAuthority(String username, String authority);
 
     void assignUserDataToUser(Long id, String username);
+
 }

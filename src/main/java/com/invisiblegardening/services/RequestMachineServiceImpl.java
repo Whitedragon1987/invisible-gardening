@@ -11,15 +11,11 @@ import com.invisiblegardening.repositories.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.util.Collection;
-import java.util.HashSet;
-
 @Service
 public class RequestMachineServiceImpl implements RequestMachineService{
-    private RequestRepository requestRepository;
-    private MachineRepository machineRepository;
-    private RequestMachineRepository requestMachineRepository;
+    private final RequestRepository requestRepository;
+    private final MachineRepository machineRepository;
+    private final RequestMachineRepository requestMachineRepository;
 
     @Autowired
     public RequestMachineServiceImpl(RequestRepository requestRepository,
@@ -32,37 +28,6 @@ public class RequestMachineServiceImpl implements RequestMachineService{
 
         this.requestMachineRepository = requestMachineRepository;
     }
-
-
-    @Override
-    public Collection<RequestMachine> getAllMachineResults() {
-        Collection<RequestMachine> requestMachines = requestMachineRepository.findAll();
-        return requestMachines;
-    }
-
-    @Override
-    public Collection<Machine> getRequestMachinesByRequestId(long requestId) {
-        Collection<Machine> machines = new HashSet<>();
-        Collection<RequestMachine> requestMachines = requestMachineRepository.findAllByRequestId(requestId);
-        for (RequestMachine requestmachine : requestMachines) {
-            machines.add(requestmachine.getMachine());
-        }
-        return machines;
-    }
-
-    @Override
-    public Collection<Request> getRequestMachinesByMachineId(long machineId) {
-        Collection<Request> requests = new HashSet<>();
-        Collection<RequestMachine> requestMachines = requestMachineRepository.findAllByRequestId(machineId);
-        for (RequestMachine requestMachine : requestMachines) {
-            requests.add(requestMachine.getRequest());
-        }
-        return requests;
-    }
-
-    @Override
-    public RequestMachine getRequestMachineById(long requestId, long machineId) {
-        return requestMachineRepository.findById(new RequestMachineKey(requestId, machineId)).orElse(null);    }
 
     @Override
     public RequestMachineKey addRequestMachine(long requestId, long machineId) {
@@ -78,4 +43,5 @@ public class RequestMachineServiceImpl implements RequestMachineService{
         requestMachineRepository.save(requestMachine);
         return id;
     }
+
 }

@@ -2,7 +2,6 @@ package com.invisiblegardening.controllers.dtos;
 
 import com.invisiblegardening.Models.Quote;
 import com.invisiblegardening.Models.Status;
-import com.invisiblegardening.Models.UserData;
 
 import java.util.Date;
 

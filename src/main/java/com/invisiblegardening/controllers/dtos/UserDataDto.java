@@ -1,7 +1,5 @@
 package com.invisiblegardening.controllers.dtos;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.invisiblegardening.Models.User;
 import com.invisiblegardening.Models.UserData;
 
 public class UserDataDto {

@@ -1,9 +1,6 @@
 package com.invisiblegardening.controllers.dtos;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.invisiblegardening.Models.Employee;
 import com.invisiblegardening.Models.Job;
-import com.invisiblegardening.services.EmployeeServiceImpl;
 
 public class JobInputDto {
     public Long id;

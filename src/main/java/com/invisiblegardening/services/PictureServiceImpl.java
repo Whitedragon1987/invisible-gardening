@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 @Service
 public class PictureServiceImpl implements PictureService{
-    private PictureRepository pictureRepository;
+    private final PictureRepository pictureRepository;
 
     @Autowired
     public PictureServiceImpl(PictureRepository pictureRepository) {

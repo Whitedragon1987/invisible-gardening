@@ -1,6 +1,7 @@
 package com.invisiblegardening.ResponseFile;
 
 public class ResponseFile {
+
     String name;
     String url;
     String type;

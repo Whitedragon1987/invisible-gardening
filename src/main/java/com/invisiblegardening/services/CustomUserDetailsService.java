@@ -27,7 +27,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         Optional<User> user = userService.getUser(username);
 
-        if (user == null) {
+        if (user.isEmpty()) {
 
             throw new UsernameNotFoundException(username);
 

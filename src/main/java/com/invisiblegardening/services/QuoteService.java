@@ -2,9 +2,7 @@ package com.invisiblegardening.services;
 
 import com.invisiblegardening.Models.Quote;
 import com.invisiblegardening.controllers.dtos.QuoteInputDto;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 public interface QuoteService {

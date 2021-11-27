@@ -7,6 +7,4 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MachineRepository extends JpaRepository<Machine, Long> {
-    Optional<Machine> findMachineByMachineNameEquals(String machineName);
-    List<Machine> findByRequestMachinesRequestId(Long id);
 }

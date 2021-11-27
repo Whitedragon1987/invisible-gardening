@@ -6,18 +6,14 @@ import com.invisiblegardening.repositories.MachineRepository;
 import com.invisiblegardening.repositories.PictureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class MachineServiceImpl implements MachineService{
-    private MachineRepository machineRepository;
-    private PictureRepository pictureRepository;
+    private final MachineRepository machineRepository;
+    private final PictureRepository pictureRepository;
 
     @Autowired
     public MachineServiceImpl(MachineRepository machineRepository,
@@ -45,25 +41,6 @@ public class MachineServiceImpl implements MachineService{
         }
 
     }
-
-//    @Override
-//    public Machine getMachineByMachineName(String machineName) {
-//
-//        var optionalMachine = machineRepository.findMachineByMachineNameEquals(machineName);
-//
-//        if(optionalMachine.isPresent()) {
-//
-//            var machine = optionalMachine.get();
-//
-//            return machine;
-//
-//        } else {
-//
-//            throw new RecordNotFoundException("Machine does not exist");
-//
-//        }
-//
-//    }
 
     @Override
     public List<Machine> getMachines() {

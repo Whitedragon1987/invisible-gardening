@@ -1,18 +1,13 @@
 package com.invisiblegardening.controllers;
 
-import com.invisiblegardening.Exceptions.BadRequestException;
 import com.invisiblegardening.Models.Request;
-import com.invisiblegardening.Models.RequestMachine;
 import com.invisiblegardening.controllers.dtos.RequestDto;
 import com.invisiblegardening.controllers.dtos.RequestInputDto;
 import com.invisiblegardening.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @RestController

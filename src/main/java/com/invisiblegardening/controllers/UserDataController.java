@@ -23,7 +23,7 @@ public class UserDataController {
 
     }
 
-    @GetMapping
+    @GetMapping("/users")
     public List<UserDataDto> getUserDataList(@RequestParam(value = "firstname", required = false, defaultValue = "") String userFirstname,
                                              @RequestParam( value = "lastname", required = false, defaultValue = "") String userLastname) {
 

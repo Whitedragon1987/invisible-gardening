@@ -2,25 +2,21 @@ package com.invisiblegardening.services;
 
 import com.invisiblegardening.Exceptions.RecordNotFoundException;
 import com.invisiblegardening.Models.Quote;
-import com.invisiblegardening.Models.Request;
 import com.invisiblegardening.Models.Status;
 import com.invisiblegardening.controllers.dtos.QuoteInputDto;
-import com.invisiblegardening.controllers.dtos.RequestInputDto;
 import com.invisiblegardening.repositories.PictureRepository;
 import com.invisiblegardening.repositories.QuoteRepository;
 import com.invisiblegardening.repositories.UserDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 @Service
 public class QuoteServiceImpl implements QuoteService {
-    private QuoteRepository quoteRepository;
-    private PictureRepository pictureRepository;
-    private UserDataRepository userDataRepository;
+    private final QuoteRepository quoteRepository;
+    private final PictureRepository pictureRepository;
+    private final UserDataRepository userDataRepository;
 
 
     @Autowired

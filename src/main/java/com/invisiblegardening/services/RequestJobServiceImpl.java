@@ -8,15 +8,11 @@ import com.invisiblegardening.repositories.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.util.Collection;
-import java.util.HashSet;
-
 @Service
 public class RequestJobServiceImpl implements RequestJobService {
-    private RequestRepository requestRepository;
-    private JobRepository jobRepository;
-    private RequestJobRepository requestJobRepository;
+    private final RequestRepository requestRepository;
+    private final JobRepository jobRepository;
+    private final RequestJobRepository requestJobRepository;
 
     @Autowired
     public RequestJobServiceImpl(RequestRepository requestRepository,
@@ -28,37 +24,6 @@ public class RequestJobServiceImpl implements RequestJobService {
         this.jobRepository = jobRepository;
 
         this.requestJobRepository = requestJobRepository;
-    }
-
-    @Override
-    public Collection<RequestJob> getAllJobResults() {
-        Collection<RequestJob> requestJobs = requestJobRepository.findAll();
-        return requestJobs;
-    }
-
-    @Override
-    public Collection<Job> getRequestJobsByRequestId(long requestId) {
-        Collection<Job> jobs = new HashSet<>();
-        Collection<RequestJob> requestJobs = requestJobRepository.findAllByRequestId(requestId);
-        for (RequestJob requestJob : requestJobs) {
-            jobs.add(requestJob.getJob());
-        }
-        return jobs;
-    }
-
-    @Override
-    public Collection<Request> getRequestJobsByJobId(long jobId) {
-        Collection<Request> requests = new HashSet<>();
-        Collection<RequestJob> requestJobs = requestJobRepository.findAllByRequestId(jobId);
-        for (RequestJob requestJob : requestJobs) {
-            requests.add(requestJob.getRequest());
-        }
-        return requests;
-    }
-
-    @Override
-    public RequestJob getRequestJobById(long requestId, long jobId) {
-        return requestJobRepository.findById(new RequestJobKey(requestId, requestId)).orElse(null);
     }
 
     @Override
@@ -75,4 +40,5 @@ public class RequestJobServiceImpl implements RequestJobService {
             requestJobRepository.save(requestJob);
             return id;
     }
+
 }

@@ -2,7 +2,6 @@ package com.invisiblegardening.services;
 
 import com.invisiblegardening.Exceptions.RecordNotFoundException;
 import com.invisiblegardening.Models.Job;
-import com.invisiblegardening.Models.Picture;
 import com.invisiblegardening.repositories.EmployeeRepository;
 import com.invisiblegardening.repositories.JobRepository;
 import com.invisiblegardening.repositories.PictureRepository;
@@ -13,9 +12,9 @@ import java.util.Optional;
 
 @Service
 public class JobServiceImpl implements JobService{
-    private JobRepository jobRepository;
-    private EmployeeRepository employeeRepository;
-    private PictureRepository pictureRepository;
+    private final JobRepository jobRepository;
+    private final EmployeeRepository employeeRepository;
+    private final PictureRepository pictureRepository;
 
     @Autowired
     public JobServiceImpl(JobRepository jobRepository,

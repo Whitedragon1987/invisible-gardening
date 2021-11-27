@@ -1,7 +1,5 @@
 package com.invisiblegardening.Models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 
 @Entity
@@ -30,7 +28,7 @@ public class Picture {
     Quote quote;
 
     public Picture(){
-    };
+    }
 
     public Picture(String name, String type, byte[] data) {
 

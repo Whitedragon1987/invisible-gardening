@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.invisiblegardening.Models.Picture;
 import com.invisiblegardening.Models.Quote;
 import com.invisiblegardening.Models.Status;
-import com.invisiblegardening.Models.UserData;
 
 import java.util.Date;
 

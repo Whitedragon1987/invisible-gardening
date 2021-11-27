@@ -118,6 +118,7 @@ public class UserServiceImpl implements com.invisiblegardening.services.UserServ
         user.addAuthority(new Authority(username, authority));
 
         userRepository.save(user);
+
     }
 
     @Override

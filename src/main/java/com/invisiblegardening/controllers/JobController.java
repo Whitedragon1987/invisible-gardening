@@ -4,7 +4,6 @@ import com.invisiblegardening.Models.Job;
 import com.invisiblegardening.controllers.dtos.IdInputDto;
 import com.invisiblegardening.controllers.dtos.JobDto;
 import com.invisiblegardening.controllers.dtos.JobInputDto;
-import com.invisiblegardening.services.EmployeeService;
 import com.invisiblegardening.services.JobService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +17,11 @@ import java.util.List;
 @RequestMapping("jobs")
 public class JobController {
     private final JobService jobService;
-    private final EmployeeService employeeService;
 
     @Autowired
-    public  JobController(JobService jobService,
-                          EmployeeService employeeService) {
+    public  JobController(JobService jobService) {
 
         this.jobService = jobService;
-        this.employeeService = employeeService;
 
     }
 
